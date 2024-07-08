@@ -42,8 +42,82 @@ class ShipmentTest {
     }
 
     @Test
-    fun addUpdateTest() {
+    fun addUpdateStatusTest() {
         val shipment = Shipment("shipped", "s1000", 20000L, "Logan, UT")
-        shipment.addUpdate(ShippingUpdate())
+        assertEquals("shipped", shipment.status)
+        shipment.addUpdate(ShippingUpdate(shipment,19000,  newStatus ="delivered"))
+        assertEquals("delivered", shipment.status)
+    }
+
+    @Test
+    fun addUpdateInvalidStatusTest() {
+        val shipment = Shipment("shipped", "s1000", 20000L, "Logan, UT")
+        assertFailsWith<IllegalArgumentException> {
+            shipment.addUpdate(ShippingUpdate(shipment, 19000, newStatus = "chilling"))
+        }
+    }
+
+    @Test
+    fun addUpdateLocationTest() {
+        val shipment = Shipment("shipped", "s1000", 20000L, "Salt Lake City, UT")
+        assertEquals("Salt Lake City, UT", shipment.currentLocation)
+        shipment.addUpdate(ShippingUpdate(shipment,19000,  newLocation ="Logan, UT"))
+        assertEquals("Logan, UT", shipment.currentLocation)
+    }
+
+    @Test
+    fun addUpdateDateTest() {
+        val shipment = Shipment("shipped", "s1000", 20000L, "Logan, UT")
+        assertEquals(20000L, shipment.expectedDeliveryDateTimestamp)
+        shipment.addUpdate(ShippingUpdate(shipment,15000,  newDeliveryDate =18000L))
+        assertEquals(18000L, shipment.expectedDeliveryDateTimestamp)
+        shipment.addUpdate(ShippingUpdate(shipment,17000,  newDeliveryDate =28000L))
+        assertEquals(28000L, shipment.expectedDeliveryDateTimestamp)
+    }
+
+    @Test
+    fun subscriberNoteTest() {
+        val shipment = Shipment("shipped", "s1000", 20000L, "Logan, UT")
+        val observer = ObserverTestHelper()
+        shipment.subscribe(observer)
+        assertFalse { observer.triggered }
+        shipment.addNote("New note")
+        assertTrue { observer.triggered }
+    }
+
+
+    @Test
+    fun subscriberUpdateTest() {
+        val shipment = Shipment("shipped", "s1000", 20000L, "Logan, UT")
+        val observer = ObserverTestHelper()
+        shipment.subscribe(observer)
+        assertFalse { observer.triggered }
+        shipment.addUpdate(ShippingUpdate(shipment,15000,  newDeliveryDate =18000L))
+        assertTrue { observer.triggered }
+    }
+
+    @Test
+    fun unsubscribeTest(){
+        val shipment = Shipment("shipped", "s1000", 20000L, "Logan, UT")
+        val observer = ObserverTestHelper()
+        shipment.subscribe(observer)
+        assertFalse { observer.triggered }
+        shipment.unsubscribe()
+        shipment.addUpdate(ShippingUpdate(shipment,15000,  newDeliveryDate =18000L))
+        assertFalse { observer.triggered }
+    }
+
+    @Test
+    fun updateHistoryTest(){
+        val shipment = Shipment("shipped", "s1000", 20000L, "Salt Lake City, UT")
+        val update1 = ShippingUpdate(shipment,19000,  newLocation ="Logan, UT")
+        val update2 = ShippingUpdate(shipment,19000,  newLocation ="Utah State University, UT")
+        val update3 = ShippingUpdate(shipment,19000,  newDeliveryDate =19000L)
+        val update4 = ShippingUpdate(shipment,19000,  newStatus ="Delivered")
+        shipment.addUpdate(update1)
+        shipment.addUpdate(update2)
+        shipment.addUpdate(update3)
+        shipment.addUpdate(update4)
+        assertContentEquals(listOf(update1,update2,update3,update4),shipment.updateHistory)
     }
 }

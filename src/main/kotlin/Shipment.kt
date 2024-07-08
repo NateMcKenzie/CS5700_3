@@ -13,7 +13,7 @@ class Shipment(
         private set
     private val _notes = notes.toMutableList()
     val notes: List<String> get() = _notes.toList()
-    val _updateHistory : MutableList<ShippingUpdate> = mutableListOf()
+    private val _updateHistory : MutableList<ShippingUpdate> = mutableListOf()
     val updateHistory: List<ShippingUpdate> get() = _updateHistory.toList()
     private var observer: Observer? = null
 
