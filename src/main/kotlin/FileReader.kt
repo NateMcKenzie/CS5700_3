@@ -4,7 +4,7 @@ import kotlin.concurrent.timer
 class FileReader (
     fileName: String
 ): Subject{
-    private val bufferedReader = File(fileName).bufferedReader()
+    private val file = File(fileName).bufferedReader()
     private var observer: Observer? = null
     var nextInstruction = ""
 
@@ -15,7 +15,7 @@ class FileReader (
     }
 
     fun readInstruction(){
-        nextInstruction = bufferedReader.readLine()
+        nextInstruction = file.readLine()
         observer?.update()
     }
 
