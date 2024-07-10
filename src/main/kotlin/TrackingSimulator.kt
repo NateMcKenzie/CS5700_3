@@ -1,7 +1,7 @@
 import InstructionHandlers.*
 
 class TrackingSimulator {
-    companion object {
+    companion object :Observer {
         private val shipments = mutableListOf<Shipment>();
         private val instructionMap = mapOf<String, InstructionHandler>(
             "created" to CreateShipment(),
@@ -15,16 +15,22 @@ class TrackingSimulator {
         )
         private val instructionStream = FileReader("input.txt")
 
-        fun findShipment(id: String): Shipment? {
-            TODO("Not yet implemented")
+        fun findShipment(id: String) = shipments.find {
+                it.id == id
         }
 
         fun addShipment(shipment: Shipment) {
-            TODO("Not yet implemented")
+            shipments.add(shipment)
         }
 
         fun runSimulation() {
-            TODO("Not yet implemented")
+            instructionStream.start()
+            instructionStream.subscribe(this)
+        }
+        override fun update() {
+            val splits = instructionStream.nextInstruction.split(',')
+            instructionMap[splits[0]]?.handleInstruction(splits.drop(1))
         }
     }
+
 }

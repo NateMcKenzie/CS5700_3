@@ -8,7 +8,7 @@ class FileReader (
     private var observers: MutableList<Observer> = mutableListOf()
     var nextInstruction = ""
 
-    init {
+    fun start(){
         timer(initialDelay = 0L, period = 1000L) {
             readInstruction()
         }

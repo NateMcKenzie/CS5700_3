@@ -1,5 +1,5 @@
 package InstructionHandlers
 
 interface InstructionHandler {
-    fun handleInstruction(instruction: String)
+    fun handleInstruction(instructionSplit: List<String>)
 }
