@@ -102,7 +102,7 @@ class ShipmentTest {
         val observer = ObserverTestHelper()
         shipment.subscribe(observer)
         assertFalse { observer.triggered }
-        shipment.unsubscribe()
+        shipment.unsubscribe(observer)
         shipment.addUpdate(ShippingUpdate(shipment,15000,  newDeliveryDate =18000L))
         assertFalse { observer.triggered }
     }

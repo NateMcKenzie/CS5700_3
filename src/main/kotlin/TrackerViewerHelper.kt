@@ -26,7 +26,7 @@ class TrackerViewerHelper: Observer {
     }
 
     fun stopTracking(){
-        shipment?.unsubscribe()
+        shipment?.unsubscribe(this)
         shipment = null
     }
 

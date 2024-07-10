@@ -1,4 +1,5 @@
 interface Subject {
     fun subscribe(observer: Observer)
-    fun unsubscribe()
+    fun unsubscribe(observer: Observer)
+    fun notifySubscribers()
 }

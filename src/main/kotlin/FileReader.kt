@@ -5,7 +5,7 @@ class FileReader (
     fileName: String
 ): Subject{
     private val file = File(fileName).bufferedReader()
-    private var observer: Observer? = null
+    private var observers: MutableList<Observer> = mutableListOf()
     var nextInstruction = ""
 
     init {
@@ -16,15 +16,19 @@ class FileReader (
 
     fun readInstruction(){
         nextInstruction = file.readLine()
-        observer?.update()
+        notifySubscribers()
     }
 
     override fun subscribe(observer: Observer) {
-        this.observer = observer
+        TODO("Not yet implemented")
     }
 
-    override fun unsubscribe() {
-        this.observer = null
+    override fun unsubscribe(observer: Observer) {
+        TODO("Not yet implemented")
+    }
+
+    override fun notifySubscribers() {
+        TODO("Not yet implemented")
     }
 
 
