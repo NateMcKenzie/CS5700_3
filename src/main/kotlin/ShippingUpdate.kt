@@ -1,7 +1,7 @@
 class ShippingUpdate (
     shipment: Shipment,
     val timestamp: Long,
-    val newStatus: String = shipment.status,
+    val newStatus: Status = shipment.status,
     val newDeliveryDate: Long = shipment.expectedDeliveryDateTimestamp,
     val newLocation: String = shipment.currentLocation
 ){

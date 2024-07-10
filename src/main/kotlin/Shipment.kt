@@ -1,5 +1,5 @@
 class Shipment(
-    status: String,
+    status: Status,
     val id: String,
     expectedDeliveryDateTimestamp: Long,
     currentLocation: String,
