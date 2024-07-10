@@ -20,16 +20,14 @@ class FileReader (
     }
 
     override fun subscribe(observer: Observer) {
-        TODO("Not yet implemented")
+        observers.add(observer)
     }
 
     override fun unsubscribe(observer: Observer) {
-        TODO("Not yet implemented")
+        observers.remove(observer)
     }
 
     override fun notifySubscribers() {
-        TODO("Not yet implemented")
+        observers.forEach { it.update() }
     }
-
-
 }
