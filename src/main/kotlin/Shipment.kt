@@ -2,8 +2,8 @@ class Shipment(
     status: Status,
     val id: String,
     expectedDeliveryDateTimestamp: Long,
-    currentLocation: String,
-    notes: List<String> = listOf<String>()
+    currentLocation: String = "Warehouse",
+    notes: List<String> = listOf()
 ): Subject{
     var status = status
         private set
