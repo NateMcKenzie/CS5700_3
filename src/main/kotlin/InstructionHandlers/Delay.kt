@@ -4,9 +4,9 @@ import ShippingUpdate
 import TrackingSimulator
 
 class Delay : InstructionHandler {
-    override fun handleInstruction(instruction: List<String>) {
-        val shipment = TrackingSimulator.findShipment(instruction[0])
-        shipment?.addUpdate(ShippingUpdate(shipment, instruction[1].toLong(), newDeliveryDate = instruction[2].toLong()))
+    override fun handleInstruction(instructionSplit: List<String>) {
+        val shipment = TrackingSimulator.findShipment(instructionSplit[0])
+        shipment?.addUpdate(ShippingUpdate(shipment, instructionSplit[1].toLong(), newDeliveryDate = instructionSplit[2].toLong()))
     }
 
 }
