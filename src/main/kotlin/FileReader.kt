@@ -1,22 +1,32 @@
 import java.io.File
+import java.util.*
 import kotlin.concurrent.timer
 
 class FileReader (
-    fileName: String
+    fileName: String,
+    private val period: Long = 1000L
 ): Subject{
+    var nextInstruction :String = ""
+        private set
     private val file = File(fileName).bufferedReader()
     private var observers: MutableList<Observer> = mutableListOf()
-    var nextInstruction = ""
+    private lateinit var timer : Timer
 
     fun start(){
-        timer(initialDelay = 0L, period = 1000L) {
+        timer = timer(initialDelay = 0L, period = period) {
             readInstruction()
         }
     }
 
     fun readInstruction(){
-        nextInstruction = file.readLine()
-        notifySubscribers()
+        //Credit to Claude AI for this kotlin idiom
+        file.readLine()?.also { line ->
+            nextInstruction = line
+            notifySubscribers()
+        } ?: run {
+            timer.cancel()
+            return
+        }
     }
 
     override fun subscribe(observer: Observer) {
