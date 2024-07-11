@@ -3,8 +3,8 @@ import kotlin.test.*
 class ShipmentTest {
     @Test
     fun constructorNotelessTest() {
-        val shipment = Shipment("shipped", "s1000", 20000L, "Logan, UT")
-        assertEquals("shipped", shipment.status)
+        val shipment = Shipment(Status.shipped, "s1000", 20000L, "Logan, UT")
+        assertEquals(Status.shipped, shipment.status)
         assertEquals("s1000", shipment.id)
         assertEquals(20000L, shipment.expectedDeliveryDateTimestamp)
         assertEquals("Logan, UT", shipment.currentLocation)
@@ -13,8 +13,8 @@ class ShipmentTest {
 
     @Test
     fun constructorNotedTest() {
-        val shipment = Shipment("shipped", "s1000", 20000L, "Logan, UT", listOf("Imported from Canada", "Passed border"))
-        assertEquals("shipped", shipment.status)
+        val shipment = Shipment(Status.shipped, "s1000", 20000L, "Logan, UT", listOf("Imported from Canada", "Passed border"))
+        assertEquals(Status.shipped, shipment.status)
         assertEquals("s1000", shipment.id)
         assertEquals(20000L, shipment.expectedDeliveryDateTimestamp)
         assertEquals("Logan, UT", shipment.currentLocation)
@@ -22,16 +22,8 @@ class ShipmentTest {
     }
 
     @Test
-    fun constructorInvalidStatusTest() {
-        assertFailsWith<IllegalArgumentException> {
-            val shipment =
-                Shipment("Chilling", "s1000", 20000L, "Logan, UT", listOf("Imported from Canada", "Passed border"))
-        }
-    }
-
-    @Test
     fun addNoteTest() {
-        val shipment = Shipment("shipped", "s1000", 20000L, "Logan, UT")
+        val shipment = Shipment(Status.shipped, "s1000", 20000L, "Logan, UT")
         assertTrue(shipment.notes.isEmpty())
         shipment.addNote("Made it to Utah")
         assertContentEquals(listOf("Made it to Utah"), shipment.notes)
@@ -43,23 +35,15 @@ class ShipmentTest {
 
     @Test
     fun addUpdateStatusTest() {
-        val shipment = Shipment("shipped", "s1000", 20000L, "Logan, UT")
-        assertEquals("shipped", shipment.status)
-        shipment.addUpdate(ShippingUpdate(shipment,19000,  newStatus ="delivered"))
-        assertEquals("delivered", shipment.status)
-    }
-
-    @Test
-    fun addUpdateInvalidStatusTest() {
-        val shipment = Shipment("shipped", "s1000", 20000L, "Logan, UT")
-        assertFailsWith<IllegalArgumentException> {
-            shipment.addUpdate(ShippingUpdate(shipment, 19000, newStatus = "chilling"))
-        }
+        val shipment = Shipment(Status.shipped, "s1000", 20000L, "Logan, UT")
+        assertEquals(Status.shipped, shipment.status)
+        shipment.addUpdate(ShippingUpdate(shipment,19000,  newStatus =Status.delivered))
+        assertEquals(Status.delivered, shipment.status)
     }
 
     @Test
     fun addUpdateLocationTest() {
-        val shipment = Shipment("shipped", "s1000", 20000L, "Salt Lake City, UT")
+        val shipment = Shipment(Status.shipped, "s1000", 20000L, "Salt Lake City, UT")
         assertEquals("Salt Lake City, UT", shipment.currentLocation)
         shipment.addUpdate(ShippingUpdate(shipment,19000,  newLocation ="Logan, UT"))
         assertEquals("Logan, UT", shipment.currentLocation)
@@ -67,7 +51,7 @@ class ShipmentTest {
 
     @Test
     fun addUpdateDateTest() {
-        val shipment = Shipment("shipped", "s1000", 20000L, "Logan, UT")
+        val shipment = Shipment(Status.shipped, "s1000", 20000L, "Logan, UT")
         assertEquals(20000L, shipment.expectedDeliveryDateTimestamp)
         shipment.addUpdate(ShippingUpdate(shipment,15000,  newDeliveryDate =18000L))
         assertEquals(18000L, shipment.expectedDeliveryDateTimestamp)
@@ -77,7 +61,7 @@ class ShipmentTest {
 
     @Test
     fun subscriberNoteTest() {
-        val shipment = Shipment("shipped", "s1000", 20000L, "Logan, UT")
+        val shipment = Shipment(Status.shipped, "s1000", 20000L, "Logan, UT")
         val observer = ObserverTestHelper()
         shipment.subscribe(observer)
         assertFalse { observer.triggered }
@@ -88,7 +72,7 @@ class ShipmentTest {
 
     @Test
     fun subscriberUpdateTest() {
-        val shipment = Shipment("shipped", "s1000", 20000L, "Logan, UT")
+        val shipment = Shipment(Status.shipped, "s1000", 20000L, "Logan, UT")
         val observer = ObserverTestHelper()
         shipment.subscribe(observer)
         assertFalse { observer.triggered }
@@ -98,7 +82,7 @@ class ShipmentTest {
 
     @Test
     fun unsubscribeTest(){
-        val shipment = Shipment("shipped", "s1000", 20000L, "Logan, UT")
+        val shipment = Shipment(Status.shipped, "s1000", 20000L, "Logan, UT")
         val observer = ObserverTestHelper()
         shipment.subscribe(observer)
         assertFalse { observer.triggered }
@@ -109,11 +93,11 @@ class ShipmentTest {
 
     @Test
     fun updateHistoryTest(){
-        val shipment = Shipment("shipped", "s1000", 20000L, "Salt Lake City, UT")
+        val shipment = Shipment(Status.shipped, "s1000", 20000L, "Salt Lake City, UT")
         val update1 = ShippingUpdate(shipment,19000,  newLocation ="Logan, UT")
         val update2 = ShippingUpdate(shipment,19000,  newLocation ="Utah State University, UT")
         val update3 = ShippingUpdate(shipment,19000,  newDeliveryDate =19000L)
-        val update4 = ShippingUpdate(shipment,19000,  newStatus ="Delivered")
+        val update4 = ShippingUpdate(shipment,19000,  newStatus=Status.delivered)
         shipment.addUpdate(update1)
         shipment.addUpdate(update2)
         shipment.addUpdate(update3)
