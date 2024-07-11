@@ -13,7 +13,7 @@ class TrackingSimulator {
             "canceled" to Cancel(),
             "delivered" to Deliver()
         )
-        private val instructionStream = FileReader("res/input.txt")
+        private lateinit var instructionStream : FileReader
 
         fun findShipment(id: String) = shipments.find {
                 it.id == id
@@ -23,9 +23,10 @@ class TrackingSimulator {
             shipments.add(shipment)
         }
 
-        fun runSimulation() {
-            instructionStream.start()
+        fun runSimulation(inputFile : String) {
+            instructionStream = FileReader(inputFile)
             instructionStream.subscribe(this)
+            instructionStream.start()
         }
         override fun update() {
             val splits = instructionStream.nextInstruction.split(',')
