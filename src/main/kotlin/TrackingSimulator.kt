@@ -2,7 +2,7 @@ import InstructionHandlers.*
 
 class TrackingSimulator {
     companion object :Observer {
-        private val shipments = mutableListOf<Shipment>();
+        private val shipments = mutableSetOf<Shipment>();
         private val instructionMap = mapOf<String, InstructionHandler>(
             "created" to CreateShipment(),
             "shipped" to Ship(),

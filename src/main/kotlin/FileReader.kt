@@ -18,14 +18,13 @@ class FileReader (
         }
     }
 
-    fun readInstruction(){
-        //Credit to Claude AI for this kotlin idiom
+    private fun readInstruction(){
+        //Credit to Claude AI for this kotlin idiom (if null do expected, else shut it down)
         file.readLine()?.also { line ->
             nextInstruction = line
             notifySubscribers()
         } ?: run {
             timer.cancel()
-            return
         }
     }
 
