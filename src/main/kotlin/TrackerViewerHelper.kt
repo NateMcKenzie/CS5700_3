@@ -1,12 +1,11 @@
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
 class TrackerViewerHelper: Observer {
     var shipmentId by mutableStateOf("")
         private set
-    var shipmentStatus by mutableStateOf("")
+    var shipmentStatus by mutableStateOf(Status.Unknown)
         private set
     //TODO: Figure out how to do lists and fix update history
     var shipmentUpdateHistory by mutableStateOf("")

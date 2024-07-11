@@ -13,7 +13,7 @@ class TrackingSimulator {
             "canceled" to Cancel(),
             "delivered" to Deliver()
         )
-        private val instructionStream = FileReader("input.txt")
+        private val instructionStream = FileReader("res/input.txt")
 
         fun findShipment(id: String) = shipments.find {
                 it.id == id

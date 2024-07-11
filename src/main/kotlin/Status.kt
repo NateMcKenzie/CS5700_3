@@ -1,3 +1,3 @@
 enum class Status {
-    Created, Shipped, Lost, Canceled, Delivered
+    Created, Shipped, Lost, Canceled, Delivered, Unknown
 }
