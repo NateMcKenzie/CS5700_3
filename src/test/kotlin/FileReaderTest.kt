@@ -64,13 +64,17 @@ class FileReaderTest : Observer{
     fun contentTest() = runBlocking{
         observedReader.start()
         delay(30L)
-        print(instructionList)
         assertContentEquals(listOf(
-        "created,s1,1652712855468",
-        "created,s2,1652712855468",
-        "shipped,s1,1652712855468,1652713940874",
-        "shipped,s2,1652712855468,1652713940874",
-        "lost,s1,1652712855468"), instructionList)
+            "created,s1,1652712855468",
+            "created,s2,1652712855468",
+            "shipped,s1,1652712855468,1652713940874",
+            "shipped,s2,1652712855468,1652713940874",
+            "location,s1,1652712855468, Logan, UT",
+            "delayed,s1,1652712855468, 1652712875870",
+            "noteadded,s1,1652712855468,package was damaged slightly during shipping",
+            "lost,s1,1652712855468",
+            "canceled,s1,1652712855468",
+            "delivered,s1,1652712855468",), instructionList)
     }
 
     override fun update() {

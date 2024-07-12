@@ -1,10 +1,9 @@
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.assertDoesNotThrow
 import java.io.FileNotFoundException
 import javax.sound.midi.Track
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertNull
+import kotlin.test.*
 
 class TrackingSimulatorTest {
 
@@ -22,6 +21,19 @@ class TrackingSimulatorTest {
             TrackingSimulator.runSimulation("res/does_not_exist_at_all.txt")
         }
         TrackingSimulator.clearShipments()
+    }
+
+    @Test
+    fun runThroughTest() = runBlocking{
+        assertDoesNotThrow {
+            TrackingSimulator.runSimulation("res/fileReaderTest.txt",10)
+            delay(110)
+            assertEquals(Status.Delivered, TrackingSimulator.findShipment("s1")?.status)
+            assertContentEquals(listOf("package was damaged slightly during shipping"), TrackingSimulator.findShipment("s1")?.notes)
+            assertEquals(Status.Shipped, TrackingSimulator.findShipment("s2")?.status)
+            TrackingSimulator.findShipment("s2")?.notes?.let { assertEquals(0, it.size) }
+            TrackingSimulator.clearShipments()
+        }
     }
 
     @Test

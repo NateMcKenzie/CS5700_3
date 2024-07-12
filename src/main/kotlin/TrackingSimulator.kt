@@ -22,14 +22,17 @@ object TrackingSimulator:Observer {
         shipments.add(shipment)
     }
 
-    fun runSimulation(inputFile : String) {
-        instructionStream = FileReader(inputFile)
+    fun runSimulation(inputFile : String, simulationSpeed : Long = 1000L) {
+        instructionStream = FileReader(inputFile, simulationSpeed)
         instructionStream.subscribe(this)
         instructionStream.start()
     }
     override fun update() {
         val splits = instructionStream.nextInstruction.split(',')
-        instructionMap[splits[0]]?.handleInstruction(splits.drop(1), findShipment(splits[1])?: return)
+        if (splits.size < 2) throw IllegalArgumentException("Invalid line in input file")
+        val handler = instructionMap[splits[0]] ?: throw NotImplementedError("${splits[0]} not a known instruction")
+        val shipment = findShipment(splits[1]) ?: throw IllegalStateException("${splits[1]} shipment not yet created")
+        handler.handleInstruction(splits.drop(1), shipment)
     }
 
     fun clearShipments() {
