@@ -31,7 +31,7 @@ object TrackingSimulator:Observer {
         val splits = instructionStream.nextInstruction.split(',')
         if (splits.size < 2) throw IllegalArgumentException("Invalid line in input file")
         val handler = instructionMap[splits[0]] ?: throw NotImplementedError("${splits[0]} not a known instruction")
-        val shipment = findShipment(splits[1]) ?: throw IllegalStateException("${splits[1]} shipment not yet created")
+        val shipment = findShipment(splits[1])
         handler.handleInstruction(splits.drop(1), shipment)
     }
 
