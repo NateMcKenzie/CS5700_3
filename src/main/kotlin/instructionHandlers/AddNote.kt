@@ -5,7 +5,12 @@ import TrackingSimulator
 
 class AddNote : InstructionHandler {
     override fun handleInstruction(instructionSplit: List<String>, shipment: Shipment?) {
-        shipment?.addNote(instructionSplit[2])
+        val remainder = instructionSplit.drop(2)
+        var rejoined = ""
+        for (part in remainder) {
+            rejoined += "$part,"
+        }
+        rejoined = rejoined.dropLast(1)
+        shipment?.addNote(rejoined)
     }
-
 }
