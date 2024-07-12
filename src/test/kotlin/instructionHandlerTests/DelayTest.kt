@@ -2,6 +2,7 @@ package instructionHandlerTests
 
 import Shipment
 import instructionHandlers.Delay
+import org.junit.jupiter.api.assertDoesNotThrow
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -27,6 +28,13 @@ class DelayTest {
         val shipment = Shipment(Status.Shipped, "s10000", 20000L)
         assertFailsWith<IllegalArgumentException> {
             Delay().handleInstruction("s10000,1652712855468,16hi52712859999".split(','),shipment)
+        }
+    }
+
+    @Test
+    fun nullShipmentTest() {
+        assertDoesNotThrow {
+            Delay().handleInstruction("s10000,1652712855468,1652712855468".split(','),null)
         }
     }
 }

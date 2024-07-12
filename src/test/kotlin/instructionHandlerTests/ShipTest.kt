@@ -2,6 +2,7 @@ package instructionHandlerTests
 
 import Shipment
 import instructionHandlers.Ship
+import org.junit.jupiter.api.assertDoesNotThrow
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -28,6 +29,13 @@ class ShipTest {
         val shipment = Shipment(Status.Shipped, "s10000", 20000L)
         assertFailsWith<IllegalArgumentException> {
             Ship().handleInstruction("s10000,1652712855468,1now652I'm712bad999999".split(','), shipment)
+        }
+    }
+
+    @Test
+    fun nullShipmentTest() {
+        assertDoesNotThrow {
+            Ship().handleInstruction("s10000,1652712855468,1652712855468".split(','),null)
         }
     }
 }
