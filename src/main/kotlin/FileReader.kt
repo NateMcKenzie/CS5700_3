@@ -13,7 +13,7 @@ class FileReader (
     private lateinit var timer : Timer
 
     fun start(){
-        timer = timer(initialDelay = 0L, period = period) {
+        timer = timer(initialDelay = 0L, period = period, daemon = true) {
             readInstruction()
         }
     }
