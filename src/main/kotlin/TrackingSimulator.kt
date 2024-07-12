@@ -29,7 +29,7 @@ object TrackingSimulator:Observer {
     }
     override fun update() {
         val splits = instructionStream.nextInstruction.split(',')
-        instructionMap[splits[0]]?.handleInstruction(splits.drop(1), findShipment(splits[1]))
+        instructionMap[splits[0]]?.handleInstruction(splits.drop(1), findShipment(splits[1])?: return)
     }
 
     fun clearShipments() {
