@@ -21,7 +21,8 @@ class TrackerViewerHelper: Observer {
         // Credit to Claude AI for telling me how to handle this null in a kotlin way
         val foundShipment = TrackingSimulator.findShipment(id) ?: return
         foundShipment.subscribe(this)
-        shipment = foundShipment 
+        shipment = foundShipment
+        update()
     }
 
     fun stopTracking(){

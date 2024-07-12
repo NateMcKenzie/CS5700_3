@@ -1,25 +1,40 @@
 import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.TextField
+import androidx.compose.runtime.*
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 
 @Composable
 @Preview
 fun App() {
-    var text by remember { mutableStateOf("Hello, World!") }
+    var shipmentHelpers = remember { mutableStateListOf<TrackerViewerHelper>() }
+    var idInput by remember { mutableStateOf("") }
 
     MaterialTheme {
-        Button(onClick = {
-            text = "Hello, Desktop!"
-        }) {
-            Text(text)
+        Column {
+            Row {
+                TextField(idInput, onValueChange = {
+                    idInput = it
+                })
+                Button(onClick = {
+                    val newHelper = TrackerViewerHelper()
+                    newHelper.trackShipment(idInput)
+                    shipmentHelpers.add(newHelper)
+                }) {
+                }
+            }
+            LazyColumn {
+                items(shipmentHelpers, key = {it.shipmentId}) {
+                        Text(it.shipmentCurrentLocation)
+                }
+            }
         }
     }
 }
