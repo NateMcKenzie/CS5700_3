@@ -1,21 +1,22 @@
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 
 class TrackerViewerHelper: Observer {
     var shipmentId by mutableStateOf("")
         private set
     var shipmentStatus by mutableStateOf(Status.Unknown)
         private set
-    //TODO: Figure out how to do lists and fix update history
-    var shipmentUpdateHistory by mutableStateOf("")
+    var shipmentUpdateHistory = mutableStateListOf<ShippingUpdate>()
         private set
     var expectedShipmentDeliveryDate by mutableStateOf(0L)
         private set
     var shipmentCurrentLocation by mutableStateOf("")
         private set
-    var shipment: Shipment? = null
-        private set
+    var shipmentNotes = mutableStateListOf<String>()
+    private var shipment: Shipment? = null
 
     fun trackShipment(id: String){
         // Credit to Claude AI for telling me how to handle this null in a kotlin way
@@ -35,9 +36,12 @@ class TrackerViewerHelper: Observer {
         shipment?.let { currentShipment ->
             shipmentId = currentShipment.id
             shipmentStatus = currentShipment.status
-            //shipmentUpdateHistory = currentShipment.updateHistory
             expectedShipmentDeliveryDate = currentShipment.expectedDeliveryDateTimestamp
             shipmentCurrentLocation = currentShipment.currentLocation
+            if (currentShipment.notes.isNotEmpty() && (shipmentNotes.isEmpty() || currentShipment.notes.last() != shipmentNotes.last()))
+            {
+                shipmentNotes.add(currentShipment.notes.last())
+            }
         }
     }
 }
