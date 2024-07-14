@@ -3,6 +3,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -16,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import java.time.Instant
@@ -27,15 +29,18 @@ import java.time.format.DateTimeFormatter
 fun App() {
     var shipmentHelpers = remember { mutableStateListOf<TrackerViewerHelper>() }
     var idInput by remember { mutableStateOf("") }
-    val heading = TextStyle(color = Color.White, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, textDecoration = TextDecoration.Underline)
+    val heading = TextStyle(color = Color.White, fontWeight = FontWeight.Bold, fontSize = 2.em, textDecoration = TextDecoration.Underline)
+    val subheading = TextStyle(color = Color.White, fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline)
     val body = TextStyle(color = Color.White)
 
     MaterialTheme {
         Column {
             Row {
+                Spacer(modifier = Modifier.weight(1f))
                 TextField(idInput, onValueChange = {
                     idInput = it
                 })
+                Spacer(modifier = Modifier.weight(0.1f))
                 Button(onClick = {
                     val newHelper = TrackerViewerHelper()
                     newHelper.trackShipment(idInput)
@@ -43,6 +48,7 @@ fun App() {
                 }) {
                     Text("Track")
                 }
+                Spacer(modifier = Modifier.weight(1f))
             }
             LazyColumn {
                 items(shipmentHelpers, key = {it.shipmentId}) {
@@ -52,13 +58,18 @@ fun App() {
                             background(Color.DarkGray)
                         ) {
                             Column (modifier = Modifier.padding(3.dp).background(Color.DarkGray)){
-                                Text(it.shipmentId, style = heading, modifier = Modifier.padding(2.dp))
+                                Row{
+                                    Spacer(Modifier.weight(1f))
+                                    Text(it.shipmentId, style = heading, modifier = Modifier.padding(2.dp))
+                                    Spacer(Modifier.weight(1f))
+                                    Button(onClick = {shipmentHelpers.remove(it)}){Text("X")}
+                                }
                                 Text(it.shipmentStatus.toString(), style = body, modifier = Modifier.padding(2.dp))
                                 Text(it.shipmentCurrentLocation, style = body, modifier = Modifier.padding(2.dp))
                                 Text(stampConvert(it.expectedShipmentDeliveryDate), style = body, modifier = Modifier.padding(2.dp))
                                 Column {
                                     if(it.shipmentNotes.isNotEmpty()){
-                                        Text("Notes", style = heading, modifier = Modifier.padding(horizontal = 2.dp, vertical = 7.dp))
+                                        Text("Notes", style = subheading, modifier = Modifier.padding(horizontal = 2.dp, vertical = 7.dp))
                                         it.shipmentNotes.forEach { note ->
                                             Text(note, style = body, modifier = Modifier.padding(2.dp))
                                         }
@@ -66,7 +77,7 @@ fun App() {
                                 }
                                 Column {
                                     if(it.shipmentUpdateHistory.isNotEmpty()){
-                                        Text("Status Updates", style = heading, modifier = Modifier.padding(horizontal = 2.dp, vertical = 7.dp))
+                                        Text("Status Updates", style = subheading, modifier = Modifier.padding(horizontal = 2.dp, vertical = 7.dp))
                                         it.shipmentUpdateHistory.forEach { update ->
                                             if(update.previousStatus != update.newStatus)
                                                 Text("${stampConvert(update.timestamp)}\nShipment went from ${update.previousStatus} to ${update.newStatus}", style = body, modifier = Modifier.padding(2.dp))
