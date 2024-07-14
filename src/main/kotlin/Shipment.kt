@@ -46,5 +46,5 @@ class Shipment(
 }
 
 enum class Status {
-    Created, Shipped, Lost, Canceled, Delivered, Unknown
+    Created, Shipped, Lost, Canceled, Delivered, Unknown, Delayed
 }

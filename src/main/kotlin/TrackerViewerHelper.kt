@@ -42,6 +42,10 @@ class TrackerViewerHelper: Observer {
             {
                 shipmentNotes.add(currentShipment.notes.last())
             }
+            if (currentShipment.updateHistory.isNotEmpty() && (shipmentUpdateHistory.isEmpty() || currentShipment.updateHistory.last() != shipmentUpdateHistory.last()))
+            {
+                shipmentUpdateHistory.add(currentShipment.updateHistory.last())
+            }
         }
     }
 }
