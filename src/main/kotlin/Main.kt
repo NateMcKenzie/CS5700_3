@@ -25,7 +25,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 @Preview
 fun App() {
-    var shipmentHelpers = remember { mutableStateListOf<TrackerViewerHelper>() }
+    val shipmentHelpers = remember { mutableStateListOf<TrackerViewerHelper>() }
     var idInput by remember { mutableStateOf("") }
     val heading = TextStyle(color = Color.White, fontWeight = FontWeight.Bold, fontSize = 2.em, textDecoration = TextDecoration.Underline)
     val subheading = TextStyle(color = Color.White, fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline)
@@ -99,6 +99,9 @@ fun App() {
 }
 
 fun stampConvert(timestamp: Long) : String{
+    if(timestamp < 0){
+        throw IllegalArgumentException("Refusing to convert negative timestamp due to inconsistent behavior")
+    }
     val instant = Instant.ofEpochMilli(timestamp)
     return instant.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("MM/dd/yy hh:mma"))
 }

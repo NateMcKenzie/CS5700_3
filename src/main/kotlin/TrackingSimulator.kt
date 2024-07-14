@@ -25,6 +25,7 @@ object TrackingSimulator:Observer {
     }
 
     fun runSimulation(inputFile : String, simulationSpeed : Long = 1000L) {
+        instructionCount = 0
         instructionStream = FileReader(inputFile, simulationSpeed)
         instructionStream.subscribe(this)
         instructionStream.start()
@@ -40,6 +41,6 @@ object TrackingSimulator:Observer {
 
     fun clearShipments() {
         shipments.clear()
-        print("\n\nDELTE THIS WHEN YOU FIND A BETTER WAY TO TEST\n\n")
+        print("\n\nDELTE TrackingSimulator.clearShipments WHEN YOU FIND A BETTER WAY TO TEST\n\n")
     }
 }

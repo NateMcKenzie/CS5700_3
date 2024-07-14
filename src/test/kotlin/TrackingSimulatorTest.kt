@@ -2,17 +2,17 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.assertDoesNotThrow
 import java.io.FileNotFoundException
-import javax.sound.midi.Track
 import kotlin.test.*
 
 class TrackingSimulatorTest {
+    @AfterTest
+    fun clear() = TrackingSimulator.clearShipments()
 
     @Test
     fun runSimulationGoodTest(){
         assertDoesNotThrow {
             TrackingSimulator.runSimulation("res/short.txt")
         }
-        TrackingSimulator.clearShipments()
     }
 
     @Test
@@ -20,7 +20,6 @@ class TrackingSimulatorTest {
         assertFailsWith<FileNotFoundException> {
             TrackingSimulator.runSimulation("res/does_not_exist_at_all.txt")
         }
-        TrackingSimulator.clearShipments()
     }
 
     @Test
@@ -47,13 +46,11 @@ class TrackingSimulatorTest {
         assertEquals(shipment1, TrackingSimulator.findShipment("s1000"))
         assertEquals(shipment2, TrackingSimulator.findShipment("s2000"))
         assertEquals(shipment3, TrackingSimulator.findShipment("s3000"))
-        TrackingSimulator.clearShipments()
     }
 
     @Test
     fun findFailTest(){
         assertNull(TrackingSimulator.findShipment("not_a_real_id"))
-        TrackingSimulator.clearShipments()
     }
 
     //Test for duplicates removed by using MutableSet for shipments instead
