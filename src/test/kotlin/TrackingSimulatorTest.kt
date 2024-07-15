@@ -1,6 +1,7 @@
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.api.assertThrows
 import java.io.FileNotFoundException
 import kotlin.test.*
 
@@ -53,5 +54,12 @@ class TrackingSimulatorTest {
         assertNull(TrackingSimulator.findShipment("not_a_real_id"))
     }
 
+    @Test
+    fun commalessInstructionTest() = runBlocking{
+        assertDoesNotThrow {
+            TrackingSimulator.runSimulation("res/commaless.txt", simulationSpeed = 1L)
+            delay(3)
+        }
+    }
     //Test for duplicates removed by using MutableSet for shipments instead
 }

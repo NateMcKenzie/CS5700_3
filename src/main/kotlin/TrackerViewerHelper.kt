@@ -20,7 +20,7 @@ class TrackerViewerHelper: Observer {
 
     fun trackShipment(id: String){
         // Credit to Claude AI for telling me how to handle this null in a kotlin way
-        val foundShipment = TrackingSimulator.findShipment(id) ?: return
+        val foundShipment = TrackingSimulator.findShipment(id) ?: throw IllegalStateException("Shipment '$id' not found")
         foundShipment.subscribe(this)
         shipment = foundShipment
         update()
@@ -29,22 +29,28 @@ class TrackerViewerHelper: Observer {
     fun stopTracking(){
         shipment?.unsubscribe(this)
         shipment = null
+        shipmentId = "No Longer Tracking"
     }
 
     override fun update() {
         // Credit to Claude AI for telling me how to handle this null in a kotlin way
-        shipment?.let { currentShipment ->
-            shipmentId = currentShipment.id
-            shipmentStatus = currentShipment.status
-            expectedShipmentDeliveryDate = currentShipment.expectedDeliveryDateTimestamp
-            shipmentCurrentLocation = currentShipment.currentLocation
-            if (currentShipment.notes.isNotEmpty() && (shipmentNotes.isEmpty() || currentShipment.notes.last() != shipmentNotes.last()))
-            {
-                shipmentNotes.add(currentShipment.notes.last())
+        shipment?.let { observedShipment ->
+            shipmentId = observedShipment.id
+            shipmentStatus = observedShipment.status
+            expectedShipmentDeliveryDate = observedShipment.expectedDeliveryDateTimestamp
+            shipmentCurrentLocation = observedShipment.currentLocation
+
+            //I tried adding each new note, but this led to problems when adding shipments that had existing histories
+            //Probably a better solution available as each update is now O(n) instead of O(1)
+            observedShipment.notes.forEach {
+                if (!shipmentNotes.contains(it)){
+                    shipmentNotes.add(it)
+                }
             }
-            if (currentShipment.updateHistory.isNotEmpty() && (shipmentUpdateHistory.isEmpty() || currentShipment.updateHistory.last() != shipmentUpdateHistory.last()))
-            {
-                shipmentUpdateHistory.add(currentShipment.updateHistory.last())
+            observedShipment.updateHistory.forEach {
+                if (!shipmentUpdateHistory.contains(it)){
+                    shipmentUpdateHistory.add(it)
+                }
             }
         }
     }

@@ -64,7 +64,10 @@ fun App() {
                                     Spacer(Modifier.weight(1f))
                                     Text(it.shipmentId, style = heading, modifier = Modifier.padding(2.dp))
                                     Spacer(Modifier.weight(1f))
-                                    Button(onClick = {shipmentHelpers.remove(it)}){Text("X")}
+                                    Button(onClick = {
+                                        shipmentHelpers.remove(it)
+                                        it.stopTracking()
+                                    }){Text("X")}
                                 }
                                 Text(it.shipmentStatus.toString(), style = body, modifier = Modifier.padding(2.dp))
                                 Text(it.shipmentCurrentLocation, style = body, modifier = Modifier.padding(2.dp))
