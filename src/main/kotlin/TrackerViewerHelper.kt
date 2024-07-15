@@ -18,12 +18,13 @@ class TrackerViewerHelper: Observer {
     var shipmentNotes = mutableStateListOf<String>()
     private var shipment: Shipment? = null
 
-    fun trackShipment(id: String){
+    fun trackShipment(id: String): Boolean{
         // Credit to Claude AI for telling me how to handle this null in a kotlin way
-        val foundShipment = TrackingSimulator.findShipment(id) ?: throw IllegalStateException("Shipment '$id' not found")
+        val foundShipment = TrackingSimulator.findShipment(id) ?: return false
         foundShipment.subscribe(this)
         shipment = foundShipment
         update()
+        return true
     }
 
     fun stopTracking(){

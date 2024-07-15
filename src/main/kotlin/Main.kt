@@ -1,14 +1,12 @@
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -21,12 +19,15 @@ import androidx.compose.ui.window.application
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 @Composable
 @Preview
 fun App() {
     val shipmentHelpers = remember { mutableStateListOf<TrackerViewerHelper>() }
     var idInput by remember { mutableStateOf("") }
+    var toastMessage by remember { mutableStateOf("") }
     val heading = TextStyle(color = Color.White, fontWeight = FontWeight.Bold, fontSize = 2.em, textDecoration = TextDecoration.Underline)
     val subheading = TextStyle(color = Color.White, fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline)
     val body = TextStyle(color = Color.White)
@@ -45,8 +46,14 @@ fun App() {
                             return@Button
                     }
                     val newHelper = TrackerViewerHelper()
-                    newHelper.trackShipment(idInput)
-                    shipmentHelpers.add(newHelper)
+                    if(newHelper.trackShipment(idInput))
+                        shipmentHelpers.add(newHelper)
+                    else{
+                        toastMessage = "$idInput not found."
+                        Timer().schedule(delay = 3000) {
+                            toastMessage = ""
+                        }
+                    }
                 }) {
                     Text("Track")
                 }
@@ -96,6 +103,11 @@ fun App() {
                             }
                         }
                 }
+            }
+        }
+        if(toastMessage.isNotEmpty()) {
+            Box(modifier = Modifier.fillMaxSize()) {
+                Text(toastMessage, modifier = Modifier.align(Alignment.BottomCenter).padding(5.dp).background(color = Color.Black).padding(2.dp), style = TextStyle(color = Color.Red, fontWeight = FontWeight.Bold, fontSize = 2.em))
             }
         }
     }
