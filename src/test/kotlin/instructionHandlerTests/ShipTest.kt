@@ -1,6 +1,7 @@
 package instructionHandlerTests
 
 import Shipment
+import Status
 import instructionHandlers.Ship
 import org.junit.jupiter.api.assertDoesNotThrow
 import kotlin.test.Test
@@ -9,15 +10,15 @@ import kotlin.test.assertFailsWith
 
 class ShipTest {
     @Test
-    fun shipTest(){
+    fun shipTest() {
         val shipment = Shipment(Status.Shipped, "s10000", 20000L)
-        Ship().handleInstruction("s10000,1652712855468,1652712999999".split(','),shipment)
+        Ship().handleInstruction("s10000,1652712855468,1652712999999".split(','), shipment)
         assertEquals(Status.Shipped, shipment.status)
         assertEquals(1652712999999, shipment.expectedDeliveryDateTimestamp)
     }
 
     @Test
-    fun badFirstTimestampTest(){
+    fun badFirstTimestampTest() {
         val shipment = Shipment(Status.Shipped, "s10000", 20000L)
         assertFailsWith<IllegalArgumentException> {
             Ship().handleInstruction("s10000,I'm bad1652712855468,1652712999999".split(','), shipment)
@@ -25,7 +26,7 @@ class ShipTest {
     }
 
     @Test
-    fun badSecondTimestampTest(){
+    fun badSecondTimestampTest() {
         val shipment = Shipment(Status.Shipped, "s10000", 20000L)
         assertFailsWith<IllegalArgumentException> {
             Ship().handleInstruction("s10000,1652712855468,1now652I'm712bad999999".split(','), shipment)
@@ -35,7 +36,7 @@ class ShipTest {
     @Test
     fun nullShipmentTest() {
         assertDoesNotThrow {
-            Ship().handleInstruction("s10000,1652712855468,1652712855468".split(','),null)
+            Ship().handleInstruction("s10000,1652712855468,1652712855468".split(','), null)
         }
     }
 }

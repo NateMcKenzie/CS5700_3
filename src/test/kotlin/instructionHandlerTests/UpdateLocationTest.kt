@@ -1,6 +1,7 @@
 package instructionHandlerTests
 
 import Shipment
+import Status
 import instructionHandlers.UpdateLocation
 import org.junit.jupiter.api.assertDoesNotThrow
 import kotlin.test.Test
@@ -33,7 +34,7 @@ class UpdateLocationTest {
     @Test
     fun nullShipmentTest() {
         assertDoesNotThrow {
-            UpdateLocation().handleInstruction("s10000,1652712855468,China".split(','),null)
+            UpdateLocation().handleInstruction("s10000,1652712855468,China".split(','), null)
         }
     }
 }

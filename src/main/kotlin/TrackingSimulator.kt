@@ -1,6 +1,6 @@
 import instructionHandlers.*
 
-object TrackingSimulator:Observer {
+object TrackingSimulator : Observer {
     private val shipments = mutableSetOf<Shipment>()
     private val instructionMap = mapOf(
         "created" to CreateShipment(),
@@ -12,28 +12,29 @@ object TrackingSimulator:Observer {
         "canceled" to Cancel(),
         "delivered" to Deliver()
     )
-    private lateinit var instructionStream : FileReader
+    private lateinit var instructionStream: FileReader
     var instructionCount = 0
         private set
 
     fun findShipment(id: String) = shipments.find {
-            it.id == id
+        it.id == id
     }
 
     fun addShipment(shipment: Shipment) {
         shipments.add(shipment)
     }
 
-    fun runSimulation(inputFile : String, simulationSpeed : Long = 1000L) {
+    fun runSimulation(inputFile: String, simulationSpeed: Long = 1000L) {
         instructionCount = 0
         instructionStream = FileReader(inputFile, simulationSpeed)
         instructionStream.subscribe(this)
         instructionStream.start()
     }
+
     override fun update() {
         instructionCount++
         val splits = instructionStream.nextInstruction.split(',')
-        if (splits.size < 2){
+        if (splits.size < 2) {
             print("Invalid line in input file: at line $instructionCount. Skipping")
             return
         }

@@ -3,8 +3,8 @@ class Shipment(
     val id: String,
     expectedDeliveryDateTimestamp: Long,
     currentLocation: String = "Warehouse",
-    notes: List<String> = listOf()
-): Subject{
+    notes: List<String> = listOf(),
+) : Subject {
     var status = status
         private set
     var expectedDeliveryDateTimestamp = expectedDeliveryDateTimestamp
@@ -13,16 +13,16 @@ class Shipment(
         private set
     private val _notes = notes.toMutableList()
     val notes: List<String> get() = _notes.toList()
-    private val _updateHistory : MutableList<ShippingUpdate> = mutableListOf()
+    private val _updateHistory: MutableList<ShippingUpdate> = mutableListOf()
     val updateHistory: List<ShippingUpdate> get() = _updateHistory.toList()
     private var observers: MutableList<Observer> = mutableListOf()
 
-    fun addNote(note: String){
+    fun addNote(note: String) {
         _notes.add(note)
         notifySubscribers()
     }
 
-    fun addUpdate(update: ShippingUpdate){
+    fun addUpdate(update: ShippingUpdate) {
         _updateHistory.add(update)
         status = update.newStatus
         expectedDeliveryDateTimestamp = update.newDeliveryDate
@@ -30,9 +30,9 @@ class Shipment(
         notifySubscribers()
     }
 
-    override fun notifySubscribers(){
+    override fun notifySubscribers() {
         observers.forEach {
-           it.update()
+            it.update()
         }
     }
 

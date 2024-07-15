@@ -11,10 +11,13 @@ class UpdateLocation : InstructionHandler {
             rejoined += "$part,"
         }
         rejoined = rejoined.dropLast(1)
-        try{
-            shipment?.addUpdate(ShippingUpdate(shipment, instructionSplit[1].toLong(),  newLocation = rejoined))
+        try {
+            shipment?.addUpdate(ShippingUpdate(shipment, instructionSplit[1].toLong(), newLocation = rejoined))
         } catch (e: NumberFormatException) {
-            throw IllegalArgumentException("Invalid timestamp: '${instructionSplit[1]}' at line ${TrackingSimulator.instructionCount}", e)
+            throw IllegalArgumentException(
+                "Invalid timestamp: '${instructionSplit[1]}' at line ${TrackingSimulator.instructionCount}",
+                e
+            )
         }
     }
 

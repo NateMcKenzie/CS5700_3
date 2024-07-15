@@ -1,11 +1,9 @@
 import androidx.compose.runtime.mutableStateListOf
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.assertDoesNotThrow
 import kotlin.test.*
 
 class TrackerViewerHelperTest {
-    lateinit var shipment : Shipment
+    lateinit var shipment: Shipment
 
     @BeforeTest
     fun setup() {
@@ -17,7 +15,7 @@ class TrackerViewerHelperTest {
     fun clear() = TrackingSimulator.clearShipments()
 
     @Test
-    fun defaultsTest(){
+    fun defaultsTest() {
         val viewer = TrackerViewerHelper()
         assertEquals("", viewer.shipmentId)
         assertEquals(Status.Unknown, viewer.shipmentStatus)
@@ -32,7 +30,14 @@ class TrackerViewerHelperTest {
         val viewer = TrackerViewerHelper()
         viewer.trackShipment("s1")
 
-        shipment.addUpdate(ShippingUpdate(shipment, 1652712855468, newStatus = Status.Delivered, newDeliveryDate = 1652712875870))
+        shipment.addUpdate(
+            ShippingUpdate(
+                shipment,
+                1652712855468,
+                newStatus = Status.Delivered,
+                newDeliveryDate = 1652712875870
+            )
+        )
         shipment.addNote("This is a box")
         shipment.addUpdate(ShippingUpdate(shipment, 1652712855468, newLocation = "Last seen: Logan, UT"))
 
@@ -60,7 +65,14 @@ class TrackerViewerHelperTest {
     fun delayedInitTest() {
         val viewer = TrackerViewerHelper()
 
-        shipment.addUpdate(ShippingUpdate(shipment, 1652712855468, newStatus = Status.Delivered, newDeliveryDate = 1652712875870))
+        shipment.addUpdate(
+            ShippingUpdate(
+                shipment,
+                1652712855468,
+                newStatus = Status.Delivered,
+                newDeliveryDate = 1652712875870
+            )
+        )
         shipment.addNote("This is a box")
         shipment.addUpdate(ShippingUpdate(shipment, 1652712855468, newLocation = "Last seen: Logan, UT"))
 
