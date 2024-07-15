@@ -61,5 +61,13 @@ class TrackingSimulatorTest {
             delay(3)
         }
     }
+
+    @Test
+    fun nonexistantInstructionTest() = runBlocking{
+        assertDoesNotThrow {
+            TrackingSimulator.runSimulation("res/nonexistantInstruction.txt", simulationSpeed = 1L)
+            delay(8)
+        }
+    }
     //Test for duplicates removed by using MutableSet for shipments instead
 }
