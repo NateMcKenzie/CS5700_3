@@ -5,6 +5,14 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import kotlin.test.*
 
 class TrackerViewerHelperTest {
+    lateinit var shipment : Shipment
+
+    @BeforeTest
+    fun setup() {
+        shipment = Shipment(Status.Created, "s1", 1652712855468)
+        TrackingSimulator.addShipment(shipment)
+    }
+
     @AfterTest
     fun clear() = TrackingSimulator.clearShipments()
 
@@ -20,12 +28,15 @@ class TrackerViewerHelperTest {
     }
 
     @Test
-    fun trackingTest() = runBlocking{
-        TrackingSimulator.runSimulation("res/fileReaderTest.txt", simulationSpeed = 1L)
+    fun trackingTest() {
         val viewer = TrackerViewerHelper()
         viewer.trackShipment("s1")
+
+        shipment.addUpdate(ShippingUpdate(shipment, 1652712855468, newStatus = Status.Delivered, newDeliveryDate = 1652712875870))
+        shipment.addNote("This is a box")
+        shipment.addUpdate(ShippingUpdate(shipment, 1652712855468, newLocation = "Last seen: Logan, UT"))
+
         assertEquals("s1", viewer.shipmentId)
-        delay(15)
         assertEquals(Status.Delivered, viewer.shipmentStatus)
         assertContentEquals(TrackingSimulator.findShipment("s1")?.updateHistory?.toSet(), viewer.shipmentUpdateHistory)
         assertEquals(1652712875870, viewer.expectedShipmentDeliveryDate)
@@ -35,9 +46,8 @@ class TrackerViewerHelperTest {
 
     @Test
     fun initTest() {
-        TrackingSimulator.runSimulation("res/fileReaderTest.txt", simulationSpeed = 10000L)
         val viewer = TrackerViewerHelper()
-        runBlocking { viewer.trackShipment("s1") }
+        viewer.trackShipment("s1")
         assertEquals("s1", viewer.shipmentId)
         assertEquals(Status.Created, viewer.shipmentStatus)
         assertContentEquals(TrackingSimulator.findShipment("s1")?.updateHistory, viewer.shipmentUpdateHistory)
@@ -47,14 +57,18 @@ class TrackerViewerHelperTest {
     }
 
     @Test
-    fun delayedInitTest() = runBlocking{
-        TrackingSimulator.runSimulation("res/fileReaderTest.txt", simulationSpeed = 1L)
+    fun delayedInitTest() {
         val viewer = TrackerViewerHelper()
-        delay(15)
+
+        shipment.addUpdate(ShippingUpdate(shipment, 1652712855468, newStatus = Status.Delivered, newDeliveryDate = 1652712875870))
+        shipment.addNote("This is a box")
+        shipment.addUpdate(ShippingUpdate(shipment, 1652712855468, newLocation = "Last seen: Logan, UT"))
+
         viewer.trackShipment("s1")
+
         assertEquals("s1", viewer.shipmentId)
         assertEquals(Status.Delivered, viewer.shipmentStatus)
-        assertContentEquals(TrackingSimulator.findShipment("s1")?.updateHistory, viewer.shipmentUpdateHistory)
+        assertContentEquals(TrackingSimulator.findShipment("s1")?.updateHistory?.toSet(), viewer.shipmentUpdateHistory)
         assertEquals(1652712875870, viewer.expectedShipmentDeliveryDate)
         assertEquals("Last seen: Logan, UT", viewer.shipmentCurrentLocation)
         assertContentEquals(TrackingSimulator.findShipment("s1")?.notes, viewer.shipmentNotes)
@@ -62,9 +76,8 @@ class TrackerViewerHelperTest {
 
     @Test
     fun stopTrackingTest() {
-        TrackingSimulator.runSimulation("res/fileReaderTest.txt", simulationSpeed = 1L)
         val viewer = TrackerViewerHelper()
-        runBlocking { viewer.trackShipment("s1") }
+        viewer.trackShipment("s1")
         assertEquals("s1", viewer.shipmentId)
         viewer.stopTracking()
         assertEquals("No Longer Tracking", viewer.shipmentId)
