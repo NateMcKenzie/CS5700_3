@@ -47,6 +47,5 @@ object TrackingSimulator:Observer {
 
     fun clearShipments() {
         shipments.clear()
-        print("\n\nDELTE TrackingSimulator.clearShipments WHEN YOU FIND A BETTER WAY TO TEST\n\n")
     }
 }
