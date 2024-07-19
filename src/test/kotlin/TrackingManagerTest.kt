@@ -11,21 +11,21 @@ class TrackingManagerTest {
     @Test
     fun runSimulationGoodTest() {
         assertDoesNotThrow {
-            TrackingManager.runSimulation("res/short.txt")
+            TrackingManager.runSimulation(FileReader("res/short.txt", 1))
         }
     }
 
     @Test
     fun runSimulationBadTest() {
         assertFailsWith<FileNotFoundException> {
-            TrackingManager.runSimulation("res/does_not_exist_at_all.txt")
+            TrackingManager.runSimulation(FileReader("res/does_not_exist_at_all.txt", 1))
         }
     }
 
     @Test
     fun runThroughTest() = runBlocking {
         assertDoesNotThrow {
-            TrackingManager.runSimulation("res/fileReaderTest.txt", 10)
+            TrackingManager.runSimulation(FileReader("res/fileReaderTest.txt", 10))
             delay(110)
             assertEquals(Status.Delivered, TrackingManager.findShipment("s1")?.status)
             assertContentEquals(
@@ -59,7 +59,7 @@ class TrackingManagerTest {
     @Test
     fun commalessInstructionTest() = runBlocking {
         assertDoesNotThrow {
-            TrackingManager.runSimulation("res/commaless.txt", simulationSpeed = 1L)
+            TrackingManager.runSimulation(FileReader("res/commaless.txt", 1))
             delay(3)
         }
     }
@@ -67,7 +67,7 @@ class TrackingManagerTest {
     @Test
     fun nonexistantInstructionTest() = runBlocking {
         assertDoesNotThrow {
-            TrackingManager.runSimulation("res/nonexistantInstruction.txt", simulationSpeed = 1L)
+            TrackingManager.runSimulation(FileReader("res/nonexistantInstruction.txt", 1))
             delay(8)
         }
     }
