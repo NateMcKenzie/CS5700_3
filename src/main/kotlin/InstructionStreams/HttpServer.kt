@@ -1,4 +1,5 @@
-import io.ktor.http.ContentDisposition.Companion.File
+package InstructionStreams
+
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -16,17 +17,15 @@ class HttpServer : InstructionStream(){
                 }
                 post ( "/update" ) {
                     val updateString = call.receiveParameters()["instruction"]
-                    updateString?.let {
-                        nextInstruction = updateString
-                        notifySubscribers()
-                    }
+                    updateString?.let{processInput(it)}
                     call.respondRedirect("/")
                 }
             }
         }.start(wait = false)
     }
 
-    private fun processInput() {
-
+    private fun processInput(updateString: String) {
+        nextInstruction = updateString
+        notifySubscribers()
     }
 }

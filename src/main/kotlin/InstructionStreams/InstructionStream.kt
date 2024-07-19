@@ -1,4 +1,9 @@
-abstract class InstructionStream : Subject{
+package InstructionStreams
+
+import Observer
+import Subject
+
+abstract class InstructionStream : Subject {
     var nextInstruction: String = ""
         protected set
     private var observers: MutableList<Observer> = mutableListOf()
