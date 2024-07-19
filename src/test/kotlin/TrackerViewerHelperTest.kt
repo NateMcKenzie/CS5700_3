@@ -98,9 +98,11 @@ class TrackerViewerHelperTest {
     @Test
     fun hallucinatedIdTest() {
         val viewer = TrackerViewerHelper()
-        assertFailsWith<IllegalStateException> {
-            viewer.trackShipment("NeverHasBeenARealShipmentId")
-        }
+        assertFalse{viewer.trackShipment("NeverHasBennARealShipmentId")}
+        //Full disclosure: I submitted this
+        //assertFailsWith<IllegalStateException> {
+        //    viewer.trackShipment("NeverHasBeenARealShipmentId")
+        //}
     }
 
     @Test
