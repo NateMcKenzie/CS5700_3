@@ -36,7 +36,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "Assn2"
+            packageName = "Assn3"
             packageVersion = "1.0.0"
         }
     }
