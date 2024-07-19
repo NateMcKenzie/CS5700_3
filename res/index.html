@@ -5,99 +5,113 @@
     <title>Shipment Tracker</title>
 </head>
 <style>
+    div {
+        margin-top: 125px;
+    }
     pre {
         background-color: black;
         color: white;
     }
+    header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding-bottom: 5px;
+        background-color: white;
+    }
 </style>
 <body>
-    <h1>Shipment Tracker</h1>
-    <form action="/update" method="POST">
-        <input type="text" name="instruction">
-        <button>Update Shipment</button>
-    </form>
+    <header>
+        <h1>Shipment Tracker</h1>
+        <form action="/update" method="POST">
+            <input type="text" name="instruction">
+            <button>Update Shipment</button>
+        </form>
+    </header>
+    <div>
     <h3>Some inspiration ;)</h3>
     <pre>
-created,s10000,1721604514000
-created,s10001,1721604514000
-created,s10002,1721604514000
-created,s10003,1721604514000
-created,s10004,1721604514000
-created,s10005,1721604514000
-created,s10006,1721604514000
-created,s10007,1721604514000
-created,s10008,1721604514000
-created,s10009,1721604514000
-shipped,s10000,1721604514000,1721762914000
-shipped,s10001,1721604514000,1721762914000
-shipped,s10002,1721604514000,1721762914000
-shipped,s10003,1721604514000,1721762914000
-shipped,s10004,1721604514000,1721762914000
-shipped,s10005,1721604514000,1721762914000
-shipped,s10006,1721604514000,1721762914000
-shipped,s10007,1721604514000,1721762914000
-shipped,s10008,1721604514000,1721762914000
-shipped,s10009,1721604514000,1721762914000
-location,s10000,1721604514000,Los Angeles, CA
-location,s10001,1721604514000,Los Angeles, CA
-location,s10002,1721604514000,Los Angeles, CA
-location,s10003,1721604514000,Los Angeles, CA
-location,s10004,1721604514000,Los Angeles, CA
-location,s10005,1721604514000,Los Angeles, CA
-location,s10006,1721604514000,Los Angeles, CA
-location,s10007,1721604514000,Los Angeles, CA
-location,s10008,1721604514000,Los Angeles, CA
-location,s10009,1721604514000,Los Angeles, CA
-delayed,s10000,1721604514000,1721762923999
-delayed,s10001,1721604514000,1721762933998
-delayed,s10002,1721604514000,1721762923999
-delayed,s10003,1721604514000,1721762923999
-delayed,s10004,1721604514000,1721762933998
-delayed,s10005,1721604514000,1721762933998
-delayed,s10006,1721604514000,1721762933998
-delayed,s10007,1721604514000,1721762933998
-delayed,s10008,1721604514000,1721762933998
-delayed,s10009,1721604514000,1721762933998
-noteadded,s10000,1721604514000,package was damaged slightly during shipping
-noteadded,s10001,1721604514000,package was damaged slightly during shipping
-noteadded,s10002,1721604514000,package was damaged slightly during shipping
-noteadded,s10003,1721604514000,package was damaged slightly during shipping
-noteadded,s10004,1721604514000,package was damaged slightly during shipping
-noteadded,s10005,1721604514000,package was damaged slightly during shipping
-noteadded,s10006,1721604514000,package was damaged slightly during shipping
-noteadded,s10007,1721604514000,package was damaged slightly during shipping
-noteadded,s10008,1721604514000,package was damaged slightly during shipping
-noteadded,s10009,1721604514000,package was damaged slightly during shipping
-noteadded,s10000,1721604514000,shipping label reprinted because of damage
-noteadded,s10001,1721604514000,shipping label reprinted because of damage
-noteadded,s10002,1721604514000,shipping label reprinted because of damage
-noteadded,s10003,1721604514000,shipping label reprinted because of damage
-noteadded,s10004,1721604514000,shipping label reprinted because of damage
-noteadded,s10005,1721604514000,shipping label reprinted because of damage
-noteadded,s10006,1721604514000,shipping label reprinted because of damage
-noteadded,s10007,1721604514000,shipping label reprinted because of damage
-noteadded,s10008,1721604514000,shipping label reprinted because of damage
-noteadded,s10009,1721604514000,shipping label reprinted because of damage
-noteadded,s10000,1721604514000,inspection completed on exported goods
-noteadded,s10001,1721604514000,inspection completed on exported goods
-noteadded,s10002,1721604514000,inspection completed on exported goods
-noteadded,s10003,1721604514000,inspection completed on exported goods
-noteadded,s10004,1721604514000,inspection completed on exported goods
-noteadded,s10005,1721604514000,inspection completed on exported goods
-noteadded,s10006,1721604514000,inspection completed on exported goods
-noteadded,s10007,1721604514000,inspection completed on exported goods
-noteadded,s10008,1721604514000,inspection completed on exported goods
-noteadded,s10009,1721604514000,inspection completed on exported goods
-lost,s10000,1721604514000
-lost,s10001,1721604514000
-lost,s10002,1721604514000
-canceled,s10003,1721604514000
-canceled,s10004,1721604514000
-canceled,s10005,1721604514000
-delivered,s10006,1721604514000
-delivered,s10007,1721604514000
-delivered,s10008,1721604514000
-delivered,s10009,1721604514000
+created,s0,1721604514000
+created,s1,1721604514000
+created,s2,1721604514000
+created,s3,1721604514000
+created,s4,1721604514000
+created,s5,1721604514000
+created,s6,1721604514000
+created,s7,1721604514000
+created,s8,1721604514000
+created,s9,1721604514000
+shipped,s0,1721604514000,1721762914000
+shipped,s1,1721604514000,1721762914000
+shipped,s2,1721604514000,1721762914000
+shipped,s3,1721604514000,1721762914000
+shipped,s4,1721604514000,1721762914000
+shipped,s5,1721604514000,1721762914000
+shipped,s6,1721604514000,1721762914000
+shipped,s7,1721604514000,1721762914000
+shipped,s8,1721604514000,1721762914000
+shipped,s9,1721604514000,1721762914000
+location,s0,1721604514000,Los Angeles, CA
+location,s1,1721604514000,Los Angeles, CA
+location,s2,1721604514000,Los Angeles, CA
+location,s3,1721604514000,Los Angeles, CA
+location,s4,1721604514000,Los Angeles, CA
+location,s5,1721604514000,Los Angeles, CA
+location,s6,1721604514000,Los Angeles, CA
+location,s7,1721604514000,Los Angeles, CA
+location,s8,1721604514000,Los Angeles, CA
+location,s9,1721604514000,Los Angeles, CA
+delayed,s0,1721604514000,1721762923999
+delayed,s1,1721604514000,1721762933998
+delayed,s2,1721604514000,1721762923999
+delayed,s3,1721604514000,1721762923999
+delayed,s4,1721604514000,1721762933998
+delayed,s5,1721604514000,1721762933998
+delayed,s6,1721604514000,1721762933998
+delayed,s7,1721604514000,1721762933998
+delayed,s8,1721604514000,1721762933998
+delayed,s9,1721604514000,1721762933998
+noteadded,s0,1721604514000,package was damaged slightly during shipping
+noteadded,s1,1721604514000,package was damaged slightly during shipping
+noteadded,s2,1721604514000,package was damaged slightly during shipping
+noteadded,s3,1721604514000,package was damaged slightly during shipping
+noteadded,s4,1721604514000,package was damaged slightly during shipping
+noteadded,s5,1721604514000,package was damaged slightly during shipping
+noteadded,s6,1721604514000,package was damaged slightly during shipping
+noteadded,s7,1721604514000,package was damaged slightly during shipping
+noteadded,s8,1721604514000,package was damaged slightly during shipping
+noteadded,s9,1721604514000,package was damaged slightly during shipping
+noteadded,s0,1721604514000,shipping label reprinted because of damage
+noteadded,s1,1721604514000,shipping label reprinted because of damage
+noteadded,s2,1721604514000,shipping label reprinted because of damage
+noteadded,s3,1721604514000,shipping label reprinted because of damage
+noteadded,s4,1721604514000,shipping label reprinted because of damage
+noteadded,s5,1721604514000,shipping label reprinted because of damage
+noteadded,s6,1721604514000,shipping label reprinted because of damage
+noteadded,s7,1721604514000,shipping label reprinted because of damage
+noteadded,s8,1721604514000,shipping label reprinted because of damage
+noteadded,s9,1721604514000,shipping label reprinted because of damage
+noteadded,s0,1721604514000,inspection completed on exported goods
+noteadded,s1,1721604514000,inspection completed on exported goods
+noteadded,s2,1721604514000,inspection completed on exported goods
+noteadded,s3,1721604514000,inspection completed on exported goods
+noteadded,s4,1721604514000,inspection completed on exported goods
+noteadded,s5,1721604514000,inspection completed on exported goods
+noteadded,s6,1721604514000,inspection completed on exported goods
+noteadded,s7,1721604514000,inspection completed on exported goods
+noteadded,s8,1721604514000,inspection completed on exported goods
+noteadded,s9,1721604514000,inspection completed on exported goods
+lost,s0,1721604514000
+lost,s1,1721604514000
+lost,s2,1721604514000
+canceled,s3,1721604514000
+canceled,s4,1721604514000
+canceled,s5,1721604514000
+delivered,s6,1721604514000
+delivered,s7,1721604514000
+delivered,s8,1721604514000
+delivered,s9,1721604514000
     </pre>
+    </div>
 </body>
 </html>
