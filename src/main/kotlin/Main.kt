@@ -1,4 +1,4 @@
-import InstructionStreams.HttpServer
+import instructionStreams.HttpServer
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -162,6 +162,6 @@ fun stampConvert(timestamp: Long): String {
 fun main() = application {
     Window(onCloseRequest = ::exitApplication) {
         App()
-        TrackingManager.runSimulation(HttpServer())
+        TrackingManager.runSimulation(HttpServer(8000))
     }
 }

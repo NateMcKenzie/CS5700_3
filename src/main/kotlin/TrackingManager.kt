@@ -1,4 +1,4 @@
-import InstructionStreams.InstructionStream
+import instructionStreams.InstructionStream
 import instructionHandlers.*
 
 object TrackingManager : Observer {

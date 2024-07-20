@@ -1,4 +1,4 @@
-package InstructionStreams
+package instructionStreams
 
 import java.io.File
 import java.util.*
@@ -19,6 +19,10 @@ class FileReader(
         }
     }
 
+    override fun stop() {
+        timer.cancel()
+    }
+
     private fun readInstruction() {
         //Credit to Claude AI for this kotlin idiom (if null do expected, else shut it down)
         file.readLine()?.also { line ->
@@ -26,7 +30,7 @@ class FileReader(
             lineNumber++
             notifySubscribers()
         } ?: run {
-            timer.cancel()
+            stop()
         }
     }
 

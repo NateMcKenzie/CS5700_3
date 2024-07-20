@@ -1,4 +1,4 @@
-package InstructionStreams
+package instructionStreams
 
 import Observer
 import Subject
@@ -8,6 +8,7 @@ abstract class InstructionStream : Subject {
         protected set
     private var observers: MutableList<Observer> = mutableListOf()
     abstract fun start()
+    abstract fun stop()
 
     override fun subscribe(observer: Observer) {
         observers.add(observer)

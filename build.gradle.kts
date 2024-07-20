@@ -23,6 +23,8 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation("io.ktor:ktor-server-core:2.3.12")
     implementation("io.ktor:ktor-server-netty:2.3.12")
+    implementation("io.ktor:ktor-client-core:2.3.12")
+    implementation("io.ktor:ktor-client-cio:2.3.12")
     testImplementation(kotlin("test"))
 }
 

@@ -1,4 +1,4 @@
-import InstructionStreams.FileReader
+import instructionStreams.FileReader
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.assertDoesNotThrow
