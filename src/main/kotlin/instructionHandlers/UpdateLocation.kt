@@ -1,6 +1,6 @@
 package instructionHandlers
 
-import Shipment
+import shipments.Shipment
 import ShippingUpdate
 
 class UpdateLocation : InstructionHandler {

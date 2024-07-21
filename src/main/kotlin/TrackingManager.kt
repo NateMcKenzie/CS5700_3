@@ -1,5 +1,6 @@
 import instructionStreams.InstructionStream
 import instructionHandlers.*
+import shipments.Shipment
 
 object TrackingManager : Observer {
     private val shipments = mutableSetOf<Shipment>()

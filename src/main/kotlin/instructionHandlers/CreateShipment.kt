@@ -1,4 +1,6 @@
 import instructionHandlers.InstructionHandler
+import shipments.Shipment
+import shipments.Status
 
 class CreateShipment : InstructionHandler {
     override fun handleInstruction(instructionSplit: List<String>, _unused: Shipment?) {

@@ -1,7 +1,7 @@
 package instructionHandlerTests
 
-import Shipment
-import Status
+import shipments.Shipment
+import shipments.Status
 import instructionHandlers.Ship
 import org.junit.jupiter.api.assertDoesNotThrow
 import kotlin.test.Test

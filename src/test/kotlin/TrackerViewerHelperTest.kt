@@ -1,5 +1,7 @@
 import androidx.compose.runtime.mutableStateListOf
 import org.junit.jupiter.api.assertDoesNotThrow
+import shipments.Shipment
+import shipments.Status
 import kotlin.test.*
 
 class TrackerViewerHelperTest {

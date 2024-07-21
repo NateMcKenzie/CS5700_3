@@ -1,7 +1,6 @@
 package instructionHandlers
 
-import Shipment
-import TrackingManager
+import shipments.Shipment
 
 class AddNote : InstructionHandler {
     override fun handleInstruction(instructionSplit: List<String>, shipment: Shipment?) {

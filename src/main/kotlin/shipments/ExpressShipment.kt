@@ -1,0 +1,4 @@
+package shipments
+
+class ExpressShipment {
+}

@@ -1,7 +1,8 @@
 package instructionHandlers
 
-import Shipment
+import shipments.Shipment
 import ShippingUpdate
+import shipments.Status
 
 class Ship : InstructionHandler {
     override fun handleInstruction(instructionSplit: List<String>, shipment: Shipment?) {

@@ -1,3 +1,5 @@
+import shipments.Shipment
+import shipments.Status
 import kotlin.test.*
 
 class ShipmentTest {

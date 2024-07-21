@@ -1,3 +1,9 @@
+package shipments
+
+import Observer
+import ShippingUpdate
+import Subject
+
 class Shipment(
     status: Status,
     val id: String,

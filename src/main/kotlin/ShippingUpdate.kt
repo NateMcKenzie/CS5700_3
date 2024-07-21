@@ -1,3 +1,6 @@
+import shipments.Shipment
+import shipments.Status
+
 class ShippingUpdate(
     shipment: Shipment,
     val timestamp: Long,
