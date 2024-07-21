@@ -12,6 +12,8 @@ class TrackerViewerHelper : Observer {
         private set
     var shipmentUpdateHistory = mutableStateListOf<ShippingUpdate>()
         private set
+    var shipmentCreatedDate by mutableStateOf(0L)
+        private set
     var expectedShipmentDeliveryDate by mutableStateOf(0L)
         private set
     var shipmentCurrentLocation by mutableStateOf("")
@@ -39,6 +41,7 @@ class TrackerViewerHelper : Observer {
         shipment?.let { observedShipment ->
             shipmentId = observedShipment.id
             shipmentStatus = observedShipment.status
+            shipmentCreatedDate = observedShipment.createdDateTimestamp
             expectedShipmentDeliveryDate = observedShipment.expectedDeliveryDateTimestamp
             shipmentCurrentLocation = observedShipment.currentLocation
 

@@ -9,7 +9,7 @@ class ShipmentTest {
         val shipment = StandardShipment(Status.Shipped, "s1000", 20000L, "Logan, UT")
         assertEquals(Status.Shipped, shipment.status)
         assertEquals("s1000", shipment.id)
-        assertEquals(20000L, shipment.expectedDeliveryDateTimestamp)
+        assertEquals(20000L, shipment.createdDateTimestamp)
         assertEquals("Logan, UT", shipment.currentLocation)
         assertTrue(shipment.notes.isEmpty())
     }
@@ -26,7 +26,7 @@ class ShipmentTest {
             )
         assertEquals(Status.Shipped, shipment.status)
         assertEquals("s1000", shipment.id)
-        assertEquals(20000L, shipment.expectedDeliveryDateTimestamp)
+        assertEquals(20000L, shipment.createdDateTimestamp)
         assertEquals("Logan, UT", shipment.currentLocation)
         assertContentEquals(listOf("Imported from Canada", "Passed border"), shipment.notes)
     }
@@ -62,7 +62,7 @@ class ShipmentTest {
     @Test
     fun addUpdateDateTest() {
         val shipment = StandardShipment(Status.Shipped, "s1000", 20000L, "Logan, UT")
-        assertEquals(20000L, shipment.expectedDeliveryDateTimestamp)
+        assertEquals(20000L, shipment.createdDateTimestamp)
         shipment.addUpdate(ShippingUpdate(shipment, 15000, newDeliveryDate = 18000L))
         assertEquals(18000L, shipment.expectedDeliveryDateTimestamp)
         shipment.addUpdate(ShippingUpdate(shipment, 17000, newDeliveryDate = 28000L))

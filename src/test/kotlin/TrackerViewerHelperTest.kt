@@ -59,7 +59,7 @@ class TrackerViewerHelperTest {
         assertEquals("s1", viewer.shipmentId)
         assertEquals(Status.Created, viewer.shipmentStatus)
         assertContentEquals(TrackingManager.findShipment("s1")?.updateHistory, viewer.shipmentUpdateHistory)
-        assertEquals(1652712855468, viewer.expectedShipmentDeliveryDate)
+        assertEquals(1652712855468, viewer.shipmentCreatedDate)
         assertEquals("Warehouse", viewer.shipmentCurrentLocation)
         assertContentEquals(TrackingManager.findShipment("s1")?.notes, viewer.shipmentNotes)
     }

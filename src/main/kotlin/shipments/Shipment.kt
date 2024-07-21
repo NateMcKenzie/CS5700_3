@@ -10,13 +10,12 @@ abstract class Shipment(
     status: Status,
     val id: String,
     val createdDateTimestamp: Long,
-    expectedDeliveryDateTimestamp: Long,
     currentLocation: String = "Warehouse",
     notes: List<String> = listOf(),
 ) : Subject {
     var status = status
         private set
-    var expectedDeliveryDateTimestamp: Long = expectedDeliveryDateTimestamp
+    var expectedDeliveryDateTimestamp: Long = 0L
         private set(value){
             field = value
             validate()

@@ -4,10 +4,9 @@ class OvernightShipment(
     status: Status,
     id: String,
     createdDateTimestamp: Long,
-    expectedDeliveryDateTimestamp: Long,
     currentLocation: String = "Warehouse",
     notes: List<String> = listOf(),
-) : Shipment(status, id, createdDateTimestamp, expectedDeliveryDateTimestamp, currentLocation, notes) {
+) : Shipment(status, id, createdDateTimestamp, currentLocation, notes) {
 
     override fun validate() {
         if(calculateDays(createdDateTimestamp, expectedDeliveryDateTimestamp) > 0){
