@@ -70,8 +70,8 @@ class FileReaderTest : Observer {
         delay(70)
         assertContentEquals(
             listOf(
-                "created,s1,1652712855468",
-                "created,s2,1652712855468",
+                "created,s1,1652712855468,standard",
+                "created,s2,1652712855468,standard",
                 "shipped,s1,1652712855468,1652713940874",
                 "shipped,s2,1652712855468,1652713940874",
                 "location,s1,1652712855468,Logan, UT",

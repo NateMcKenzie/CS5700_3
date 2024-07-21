@@ -3,18 +3,24 @@ package shipments
 import Observer
 import ShippingUpdate
 import Subject
+import java.time.Duration
+import java.time.Instant
 
 abstract class Shipment(
     status: Status,
     val id: String,
+    val createdDateTimestamp: Long,
     expectedDeliveryDateTimestamp: Long,
     currentLocation: String = "Warehouse",
     notes: List<String> = listOf(),
 ) : Subject {
     var status = status
         private set
-    var expectedDeliveryDateTimestamp = expectedDeliveryDateTimestamp
-        private set
+    var expectedDeliveryDateTimestamp: Long = expectedDeliveryDateTimestamp
+        private set(value){
+            field = value
+            validate()
+        }
     var currentLocation = currentLocation
         private set
     private val _notes = notes.toMutableList()
@@ -38,6 +44,17 @@ abstract class Shipment(
         notifySubscribers()
     }
 
+    protected fun calculateDays(first: Long, second: Long): Long {
+        val firstInstant = Instant.ofEpochMilli(first)
+        val secondInstant = Instant.ofEpochMilli(second)
+        return Duration.between(firstInstant, secondInstant).toDays()
+    }
+
+    protected fun markInvalid(reason: String) {
+        addNote("**shipment invalid**: $reason")
+        addUpdate(ShippingUpdate(this, Instant.now().toEpochMilli(), newStatus = Status.Invalid))
+    }
+
     override fun notifySubscribers() {
         observers.forEach {
             it.update()
@@ -54,5 +71,5 @@ abstract class Shipment(
 }
 
 enum class Status {
-    Created, Shipped, Lost, Canceled, Delivered, Unknown, Delayed
+    Created, Shipped, Lost, Canceled, Delivered, Unknown, Delayed, Invalid
 }

@@ -14,7 +14,7 @@ class CreateShipmentTest {
     @Test
     fun createShipmentTest() {
         val shipment = StandardShipment(Status.Shipped, "s10000", 20000L)
-        CreateShipment().handleInstruction("s10000,1652712855468".split(','), shipment)
+        CreateShipment().handleInstruction("s10000,1652712855468,standard".split(','), shipment)
         assertNotNull(TrackingManager.findShipment(shipment.id))
     }
 
@@ -22,14 +22,14 @@ class CreateShipmentTest {
     fun badTimestampTest() {
         val shipment = StandardShipment(Status.Shipped, "s10000", 20000L)
         assertFailsWith<IllegalArgumentException> {
-            CreateShipment().handleInstruction("s10000, 1652712855468".split(','), shipment)
+            CreateShipment().handleInstruction("s10000, 1652712855468,standard".split(','), shipment)
         }
     }
 
     @Test
     fun nullShipmentTest() {
         assertDoesNotThrow {
-            CreateShipment().handleInstruction("s10000,1652712855468".split(','), null)
+            CreateShipment().handleInstruction("s10000,1652712855468,standard".split(','), null)
         }
     }
 }
