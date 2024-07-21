@@ -1,6 +1,7 @@
 import androidx.compose.runtime.mutableStateListOf
 import org.junit.jupiter.api.assertDoesNotThrow
 import shipments.Shipment
+import shipments.StandardShipment
 import shipments.Status
 import kotlin.test.*
 
@@ -9,7 +10,7 @@ class TrackerViewerHelperTest {
 
     @BeforeTest
     fun setup() {
-        shipment = Shipment(Status.Created, "s1", 1652712855468)
+        shipment = StandardShipment(Status.Created, "s1", 1652712855468)
         TrackingManager.addShipment(shipment)
     }
 

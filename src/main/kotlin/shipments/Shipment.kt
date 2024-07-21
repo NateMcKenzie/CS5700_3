@@ -4,7 +4,7 @@ import Observer
 import ShippingUpdate
 import Subject
 
-class Shipment(
+abstract class Shipment(
     status: Status,
     val id: String,
     expectedDeliveryDateTimestamp: Long,
@@ -22,6 +22,8 @@ class Shipment(
     private val _updateHistory: MutableList<ShippingUpdate> = mutableListOf()
     val updateHistory: List<ShippingUpdate> get() = _updateHistory.toList()
     private var observers: MutableList<Observer> = mutableListOf()
+
+    abstract fun validate()
 
     fun addNote(note: String) {
         _notes.add(note)

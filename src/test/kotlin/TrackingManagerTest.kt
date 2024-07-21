@@ -3,6 +3,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.assertDoesNotThrow
 import shipments.Shipment
+import shipments.StandardShipment
 import shipments.Status
 import java.io.FileNotFoundException
 import kotlin.test.*
@@ -43,9 +44,9 @@ class TrackingManagerTest {
 
     @Test
     fun addFindShipmentTest() {
-        val shipment1 = Shipment(Status.Shipped, "s1000", 20000L, "Salt Lake City, UT")
-        val shipment2 = Shipment(Status.Shipped, "s2000", 21000L, "Salt Lake City, UT")
-        val shipment3 = Shipment(Status.Shipped, "s3000", 22000L, "Salt Lake City, UT")
+        val shipment1 = StandardShipment(Status.Shipped, "s1000", 20000L, "Salt Lake City, UT")
+        val shipment2 = StandardShipment(Status.Shipped, "s2000", 21000L, "Salt Lake City, UT")
+        val shipment3 = StandardShipment(Status.Shipped, "s3000", 22000L, "Salt Lake City, UT")
         TrackingManager.addShipment(shipment1)
         TrackingManager.addShipment(shipment2)
         TrackingManager.addShipment(shipment3)

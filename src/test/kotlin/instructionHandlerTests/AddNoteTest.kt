@@ -4,6 +4,7 @@ import shipments.Shipment
 import shipments.Status
 import instructionHandlers.AddNote
 import org.junit.jupiter.api.assertDoesNotThrow
+import shipments.StandardShipment
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 
@@ -11,7 +12,7 @@ class AddNoteTest {
 
     @Test
     fun addNoteNoCommaTest() {
-        val shipment = Shipment(Status.Shipped, "s10000", 20000L)
+        val shipment = StandardShipment(Status.Shipped, "s10000", 20000L)
         AddNote().handleInstruction(
             "s10000,1652712855468,package was damaged slightly during shipping".split(','),
             shipment
@@ -32,7 +33,7 @@ class AddNoteTest {
 
     @Test
     fun addNoteCommaTest() {
-        val shipment = Shipment(Status.Shipped, "s10000", 20000L)
+        val shipment = StandardShipment(Status.Shipped, "s10000", 20000L)
         AddNote().handleInstruction(
             "s10000,1652712855468,package ,was damaged slight,,ly, during shipping".split(','),
             shipment

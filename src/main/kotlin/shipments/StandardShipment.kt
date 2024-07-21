@@ -1,4 +1,15 @@
 package shipments
 
-class StandardShipment {
+class StandardShipment(
+    status: Status,
+    id: String,
+    expectedDeliveryDateTimestamp: Long,
+    currentLocation: String = "Warehouse",
+    notes: List<String> = listOf()
+) : Shipment(status, id, expectedDeliveryDateTimestamp, currentLocation, notes) {
+
+    override fun validate() {
+        TODO("Not yet implemented")
+    }
+
 }
