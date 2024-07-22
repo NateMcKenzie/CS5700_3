@@ -12,23 +12,23 @@ class TrackingManagerTest {
     fun clear() = TrackingManager.clearShipments()
 
     @Test
-    fun runSimulationGoodTest() {
+    fun runGoodTest() {
         assertDoesNotThrow {
-            TrackingManager.runSimulation(FileReader("res/short.txt", 1))
+            TrackingManager.run(FileReader("res/short.txt", 1))
         }
     }
 
     @Test
-    fun runSimulationBadTest() {
+    fun runBadTest() {
         assertFailsWith<FileNotFoundException> {
-            TrackingManager.runSimulation(FileReader("res/does_not_exist_at_all.txt", 1))
+            TrackingManager.run(FileReader("res/does_not_exist_at_all.txt", 1))
         }
     }
 
     @Test
     fun runThroughTest() = runBlocking {
         assertDoesNotThrow {
-            TrackingManager.runSimulation(FileReader("res/fileReaderTest.txt", 10))
+            TrackingManager.run(FileReader("res/fileReaderTest.txt", 10))
             delay(110)
             assertEquals(Status.Delivered, TrackingManager.findShipment("s1")?.status)
             assertContentEquals(
@@ -62,7 +62,7 @@ class TrackingManagerTest {
     @Test
     fun commalessInstructionTest() = runBlocking {
         assertDoesNotThrow {
-            TrackingManager.runSimulation(FileReader("res/commaless.txt", 1))
+            TrackingManager.run(FileReader("res/commaless.txt", 1))
             delay(3)
         }
     }
@@ -70,7 +70,7 @@ class TrackingManagerTest {
     @Test
     fun nonexistantInstructionTest() = runBlocking {
         assertDoesNotThrow {
-            TrackingManager.runSimulation(FileReader("res/nonexistantInstruction.txt", 1))
+            TrackingManager.run(FileReader("res/nonexistantInstruction.txt", 1))
             delay(8)
         }
     }

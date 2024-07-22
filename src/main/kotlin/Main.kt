@@ -172,6 +172,6 @@ fun stampConvert(timestamp: Long): String {
 fun main() = application {
     Window(onCloseRequest = ::exitApplication) {
         App()
-        TrackingManager.runSimulation(HttpServer(8000))
+        TrackingManager.run(HttpServer(8000))
     }
 }

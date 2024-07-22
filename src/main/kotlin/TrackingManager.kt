@@ -24,7 +24,7 @@ object TrackingManager : Observer {
         shipments.add(shipment)
     }
 
-    fun runSimulation(instructionStream: InstructionStream) {
+    fun run(instructionStream: InstructionStream) {
         this.instructionStream = instructionStream
         instructionStream.subscribe(this)
         instructionStream.start()
