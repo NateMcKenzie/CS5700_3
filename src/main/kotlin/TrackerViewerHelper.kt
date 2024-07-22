@@ -47,8 +47,6 @@ class TrackerViewerHelper : Observer {
             shipmentCurrentLocation = observedShipment.currentLocation
             shipmentInvalidReason = observedShipment.invalidReason
 
-            //I tried adding each new note, but this led to problems when adding shipments that had existing histories
-            //Probably a better solution available as each update is now O(n) instead of O(1)
             observedShipment.notes.forEach {
                 if (!shipmentNotes.contains(it)) {
                     shipmentNotes.add(it)
