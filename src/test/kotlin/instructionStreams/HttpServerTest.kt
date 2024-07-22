@@ -26,7 +26,7 @@ class HttpServerTest {
 
     @Test
     fun getTest() = runBlocking {
-        val response = client.get("http://localhost:8000")
+        val response = client.get("http://localhost:8001")
         assert(response.status.value in 200..299)
         val body: String = response.body()
         assert(body.isNotEmpty())
@@ -41,7 +41,7 @@ class HttpServerTest {
         }
         server.subscribe(observer)
         runBlocking {
-            client.submitForm("http://localhost:8000/update",
+            client.submitForm("http://localhost:8001/update",
                 formParameters = parameters { append("instuction", instruction) })
         }
     }
@@ -50,7 +50,7 @@ class HttpServerTest {
     fun postBadTest() {
         runBlocking {
             val before = server.nextInstruction
-            client.submitForm("http://localhost:8000/update")
+            client.submitForm("http://localhost:8001/update")
             assertEquals(before, server.nextInstruction)
         }
     }
