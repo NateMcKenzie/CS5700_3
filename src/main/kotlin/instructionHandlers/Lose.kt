@@ -1,7 +1,7 @@
 package instructionHandlers
 
-import shipments.Shipment
 import ShippingUpdate
+import shipments.Shipment
 import shipments.Status
 
 class Lose : InstructionHandler {

@@ -8,7 +8,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import java.io.File
 
-class HttpServer (private val port: Int): InstructionStream() {
+class HttpServer(private val port: Int) : InstructionStream() {
     private lateinit var server: NettyApplicationEngine
     private var running = false
 

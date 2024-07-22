@@ -9,8 +9,10 @@ class ExpressShipment(
 ) : Shipment(status, id, createdDateTimestamp, currentLocation, notes) {
 
     override fun validate() {
-        if(calculateDays(createdDateTimestamp, expectedDeliveryDateTimestamp) > 3){
+        if (status != Status.Delayed && calculateDays(createdDateTimestamp, expectedDeliveryDateTimestamp) > 3) {
             markInvalid("Express shipment scheduled to arrive in more than 3 days")
+        } else if (status == Status.Invalid) {
+            markValid()
         }
     }
 

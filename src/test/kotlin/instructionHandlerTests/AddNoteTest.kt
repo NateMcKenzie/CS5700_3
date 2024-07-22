@@ -1,10 +1,9 @@
 package instructionHandlerTests
 
-import shipments.Shipment
-import shipments.Status
 import instructionHandlers.AddNote
 import org.junit.jupiter.api.assertDoesNotThrow
 import shipments.StandardShipment
+import shipments.Status
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 

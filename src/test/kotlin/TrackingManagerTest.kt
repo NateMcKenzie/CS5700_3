@@ -2,7 +2,6 @@ import instructionStreams.FileReader
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.assertDoesNotThrow
-import shipments.Shipment
 import shipments.StandardShipment
 import shipments.Status
 import java.io.FileNotFoundException

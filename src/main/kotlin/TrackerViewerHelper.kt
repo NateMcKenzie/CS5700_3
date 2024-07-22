@@ -19,6 +19,7 @@ class TrackerViewerHelper : Observer {
     var shipmentCurrentLocation by mutableStateOf("")
         private set
     var shipmentNotes = mutableStateListOf<String>()
+    var shipmentInvalidReason by mutableStateOf("")
     private var shipment: Shipment? = null
 
     fun trackShipment(id: String): Boolean {
@@ -44,6 +45,7 @@ class TrackerViewerHelper : Observer {
             shipmentCreatedDate = observedShipment.createdDateTimestamp
             expectedShipmentDeliveryDate = observedShipment.expectedDeliveryDateTimestamp
             shipmentCurrentLocation = observedShipment.currentLocation
+            shipmentInvalidReason = observedShipment.invalidReason
 
             //I tried adding each new note, but this led to problems when adding shipments that had existing histories
             //Probably a better solution available as each update is now O(n) instead of O(1)

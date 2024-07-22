@@ -16,7 +16,7 @@ abstract class Shipment(
     var status = status
         private set
     var expectedDeliveryDateTimestamp: Long = 0L
-        private set(value){
+        private set(value) {
             field = value
             validate()
         }
@@ -27,6 +27,7 @@ abstract class Shipment(
     private val _updateHistory: MutableList<ShippingUpdate> = mutableListOf()
     val updateHistory: List<ShippingUpdate> get() = _updateHistory.toList()
     private var observers: MutableList<Observer> = mutableListOf()
+    var invalidReason = ""
 
     abstract fun validate()
 
@@ -50,8 +51,13 @@ abstract class Shipment(
     }
 
     protected fun markInvalid(reason: String) {
-        addNote("**shipment invalid**: $reason")
+        if (status == Status.Invalid) return
+        invalidReason = "Invalid: $reason"
         addUpdate(ShippingUpdate(this, Instant.now().toEpochMilli(), newStatus = Status.Invalid))
+    }
+
+    protected fun markValid() {
+        invalidReason = ""
     }
 
     override fun notifySubscribers() {

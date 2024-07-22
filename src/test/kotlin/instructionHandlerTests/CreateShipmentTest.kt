@@ -1,11 +1,10 @@
 package instructionHandlerTests
 
 import CreateShipment
-import shipments.Shipment
-import shipments.Status
 import TrackingManager
 import org.junit.jupiter.api.assertDoesNotThrow
 import shipments.StandardShipment
+import shipments.Status
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull

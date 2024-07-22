@@ -16,6 +16,7 @@ class HttpServerTest {
     companion object {
         private var port = 8000
     }
+
     private val server = HttpServer(port++)
     private val client = HttpClient(CIO)
 

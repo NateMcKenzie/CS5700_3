@@ -1,4 +1,3 @@
-import instructionStreams.HttpServer
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,10 +16,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import instructionStreams.HttpServer
+import shipments.Status
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.Timer
+import java.util.*
 import kotlin.concurrent.schedule
 
 @Composable
@@ -29,15 +30,16 @@ fun App() {
     val shipmentHelpers = remember { mutableStateListOf<TrackerViewerHelper>() }
     var idInput by remember { mutableStateOf("") }
     var toastMessage by remember { mutableStateOf("") }
-    val heading = TextStyle(
+    val headingStyle = TextStyle(
         color = Color.White,
         fontWeight = FontWeight.Bold,
         fontSize = 2.em,
         textDecoration = TextDecoration.Underline
     )
-    val subheading =
+    val subheadingStyle =
         TextStyle(color = Color.White, fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline)
-    val body = TextStyle(color = Color.White)
+    val bodyStyle = TextStyle(color = Color.White)
+    val warningStyle = TextStyle(color = Color.Red, fontWeight = FontWeight.Bold, fontSize = 1.5.em)
 
     MaterialTheme {
         Column {
@@ -72,31 +74,39 @@ fun App() {
                         modifier = Modifier.padding(3.dp).border(2.dp, Color.Black).background(Color.DarkGray)
                     ) {
                         Column(modifier = Modifier.padding(3.dp).background(Color.DarkGray)) {
+                            if (it.shipmentStatus == Status.Invalid) {
+                                Text(it.shipmentInvalidReason, style = warningStyle)
+                            }
                             Row {
                                 Spacer(Modifier.weight(1f))
-                                Text(it.shipmentId, style = heading, modifier = Modifier.padding(2.dp))
+                                Text(it.shipmentId, style = headingStyle, modifier = Modifier.padding(2.dp))
                                 Spacer(Modifier.weight(1f))
                                 Button(onClick = {
                                     shipmentHelpers.remove(it)
                                     it.stopTracking()
                                 }) { Text("X") }
                             }
-                            Text(it.shipmentStatus.toString(), style = body, modifier = Modifier.padding(2.dp))
-                            Text(it.shipmentCurrentLocation, style = body, modifier = Modifier.padding(2.dp))
+                            Text(it.shipmentStatus.toString(), style = bodyStyle, modifier = Modifier.padding(2.dp))
+                            Text(it.shipmentCurrentLocation, style = bodyStyle, modifier = Modifier.padding(2.dp))
+                            Text(
+                                stampConvert(it.shipmentCreatedDate),
+                                style = bodyStyle,
+                                modifier = Modifier.padding(2.dp)
+                            )
                             Text(
                                 stampConvert(it.expectedShipmentDeliveryDate),
-                                style = body,
+                                style = bodyStyle,
                                 modifier = Modifier.padding(2.dp)
                             )
                             Column {
                                 if (it.shipmentNotes.isNotEmpty()) {
                                     Text(
                                         "Notes",
-                                        style = subheading,
+                                        style = subheadingStyle,
                                         modifier = Modifier.padding(horizontal = 2.dp, vertical = 7.dp)
                                     )
                                     it.shipmentNotes.forEach { note ->
-                                        Text(note, style = body, modifier = Modifier.padding(2.dp))
+                                        Text(note, style = bodyStyle, modifier = Modifier.padding(2.dp))
                                     }
                                 }
                             }
@@ -104,20 +114,20 @@ fun App() {
                                 if (it.shipmentUpdateHistory.isNotEmpty()) {
                                     Text(
                                         "Status Updates",
-                                        style = subheading,
+                                        style = subheadingStyle,
                                         modifier = Modifier.padding(horizontal = 2.dp, vertical = 7.dp)
                                     )
                                     it.shipmentUpdateHistory.forEach { update ->
                                         if (update.previousStatus != update.newStatus)
                                             Text(
                                                 "${stampConvert(update.timestamp)}\nShipment went from ${update.previousStatus} to ${update.newStatus}",
-                                                style = body,
+                                                style = bodyStyle,
                                                 modifier = Modifier.padding(2.dp)
                                             )
                                         if (update.previousLocation != update.newLocation)
                                             Text(
                                                 "${stampConvert(update.timestamp)}\nShipment arrived from ${update.previousLocation} to ${update.newLocation}",
-                                                style = body,
+                                                style = bodyStyle,
                                                 modifier = Modifier.padding(2.dp)
                                             )
                                         if (update.previousDeliveryDate != update.newDeliveryDate)
@@ -127,7 +137,7 @@ fun App() {
                                                         update.previousDeliveryDate
                                                     )
                                                 } to ${stampConvert(update.newDeliveryDate)}",
-                                                style = body,
+                                                style = bodyStyle,
                                                 modifier = Modifier.padding(2.dp)
                                             )
                                     }
@@ -144,7 +154,7 @@ fun App() {
                     toastMessage,
                     modifier = Modifier.align(Alignment.BottomCenter).padding(5.dp).background(color = Color.Black)
                         .padding(2.dp),
-                    style = TextStyle(color = Color.Red, fontWeight = FontWeight.Bold, fontSize = 2.em)
+                    style = warningStyle
                 )
             }
         }

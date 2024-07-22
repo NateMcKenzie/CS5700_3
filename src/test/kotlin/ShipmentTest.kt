@@ -1,4 +1,3 @@
-import shipments.Shipment
 import shipments.StandardShipment
 import shipments.Status
 import kotlin.test.*

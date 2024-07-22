@@ -1,5 +1,5 @@
-import instructionStreams.InstructionStream
 import instructionHandlers.*
+import instructionStreams.InstructionStream
 import shipments.Shipment
 
 object TrackingManager : Observer {

@@ -7,7 +7,7 @@ import kotlin.concurrent.timer
 class FileReader(
     fileName: String,
     private val period: Long = 1000L,
-) : InstructionStream(){
+) : InstructionStream() {
     private val file = File(fileName).bufferedReader()
     private lateinit var timer: Timer
     var lineNumber = 0
