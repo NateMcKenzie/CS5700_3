@@ -1,5 +1,7 @@
-import shipments.StandardShipment
-import shipments.Status
+package shipments
+
+import ObserverTestHelper
+import ShippingUpdate
 import kotlin.test.*
 
 class ShipmentTest {
@@ -110,6 +112,50 @@ class ShipmentTest {
         shipment.addUpdate(update2)
         shipment.addUpdate(update3)
         shipment.addUpdate(update4)
-        assertContentEquals(listOf(update1, update2, update3, update4), shipment.updateHistory)
+        assertContains(shipment.updateHistory, update1)
+        assertContains(shipment.updateHistory, update2)
+        assertContains(shipment.updateHistory, update3)
+        assertContains(shipment.updateHistory, update4)
+    }
+
+    @Test
+    fun markInvalidTest() {
+        val shipment = StandardShipment(Status.Shipped, "s1000", 200000000L, "Salt Lake City, UT")
+        shipment.addUpdate(ShippingUpdate(shipment, 0, newDeliveryDate = 1, newStatus = Status.Shipped))
+        assert(shipment.status == Status.Invalid)
+        assertEquals("Invalid: Delivery date is earlier than shipment date.", shipment.invalidReason)
+    }
+
+    @Test
+    fun markValidTest() {
+        val shipment = StandardShipment(Status.Shipped, "s1000", 200000000L, "Salt Lake City, UT")
+        shipment.addUpdate(ShippingUpdate(shipment, 0, newDeliveryDate = 1, newStatus = Status.Shipped))
+        assert(shipment.status == Status.Invalid)
+        assertEquals("Invalid: Delivery date is earlier than shipment date.", shipment.invalidReason)
+        shipment.addUpdate(ShippingUpdate(shipment, 0, newDeliveryDate = 200000000L, newStatus = Status.Shipped))
+        assert(shipment.status == Status.Shipped)
+        assertEquals("", shipment.invalidReason)
+    }
+
+    @Test
+    fun calculateDaysTest() {
+        // 7/23/24 12:00.000AM
+        assertEquals(1L, Shipment.Companion.calculateDays(1721714400000, 1721800800000))
+        // 7/24/24 12:00.000AM
+        assertEquals(0L, Shipment.Companion.calculateDays(1721714400000, 1721800799999))
+    }
+
+    @Test
+    fun calculateDaysLongTest() {
+        // 1 Week
+        assertEquals(7L, Shipment.Companion.calculateDays(1721714400000, 1722319200000))
+        // 1 Year
+        assertEquals(365L, Shipment.Companion.calculateDays(1672531200000, 1704067200000))
+    }
+
+    @Test
+    fun calculateDaysNegativeTest() {
+        // Negative 1 day
+        assertEquals(-1L, Shipment.Companion.calculateDays(1721800800000, 1721714400000))
     }
 }

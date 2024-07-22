@@ -9,8 +9,10 @@ class StandardShipment(
 ) : Shipment(status, id, createdDateTimestamp, currentLocation, notes) {
 
     override fun validate() {
-        if (calculateDays(createdDateTimestamp, expectedDeliveryDateTimestamp) < 0){
+        if (createdDateTimestamp > expectedDeliveryDateTimestamp) {
             markInvalid("Delivery date is earlier than shipment date.")
+        } else {
+            markValid()
         }
     }
 

@@ -3,9 +3,9 @@ package shipments
 import Observer
 import ShippingUpdate
 import Subject
-import java.time.Duration
 import java.time.Instant
 import java.time.ZoneId
+import java.time.temporal.ChronoUnit
 
 abstract class Shipment(
     status: Status,
@@ -19,7 +19,8 @@ abstract class Shipment(
     var expectedDeliveryDateTimestamp: Long = 0L
         private set(value) {
             field = value
-            validate()
+            if (expectedDeliveryDateTimestamp != 0L)
+                validate()
         }
     var currentLocation = currentLocation
         private set
@@ -29,6 +30,16 @@ abstract class Shipment(
     val updateHistory: List<ShippingUpdate> get() = _updateHistory.toList()
     private var observers: MutableList<Observer> = mutableListOf()
     var invalidReason = ""
+
+    companion object {
+        @JvmStatic
+        fun calculateDays(first: Long, second: Long): Long {
+            val zone = ZoneId.systemDefault()
+            val firstDate = Instant.ofEpochMilli(first).atZone(zone).toLocalDate()
+            val secondDate = Instant.ofEpochMilli(second).atZone(zone).toLocalDate()
+            return ChronoUnit.DAYS.between(firstDate, secondDate)
+        }
+    }
 
     abstract fun validate()
 
@@ -43,14 +54,6 @@ abstract class Shipment(
         expectedDeliveryDateTimestamp = update.newDeliveryDate
         currentLocation = update.newLocation
         notifySubscribers()
-    }
-
-    protected fun calculateDays(first: Long, second: Long): Long {
-        val firstInstant = Instant.ofEpochMilli(first).atZone(ZoneId.systemDefault())
-        val secondInstant = Instant.ofEpochMilli(second).atZone(ZoneId.systemDefault())
-        val firstDays = Duration.between(Instant.ofEpochMilli(0), firstInstant).toDays()
-        val secondDays = Duration.between(Instant.ofEpochMilli(0), secondInstant).toDays()
-        return secondDays - firstDays
     }
 
     protected fun markInvalid(reason: String) {
