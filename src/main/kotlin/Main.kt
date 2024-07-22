@@ -87,14 +87,14 @@ fun App() {
                                 }) { Text("X") }
                             }
                             Text(it.shipmentStatus.toString(), style = bodyStyle, modifier = Modifier.padding(2.dp))
-                            Text(it.shipmentCurrentLocation, style = bodyStyle, modifier = Modifier.padding(2.dp))
+                            Text("Location: ${it.shipmentCurrentLocation}", style = bodyStyle, modifier = Modifier.padding(2.dp))
                             Text(
-                                stampConvert(it.shipmentCreatedDate),
+                                "Created: ${stampConvert(it.shipmentCreatedDate)}",
                                 style = bodyStyle,
                                 modifier = Modifier.padding(2.dp)
                             )
                             Text(
-                                stampConvert(it.expectedShipmentDeliveryDate),
+                                "Delivery Date: ${stampConvert(it.expectedShipmentDeliveryDate)}",
                                 style = bodyStyle,
                                 modifier = Modifier.padding(2.dp)
                             )

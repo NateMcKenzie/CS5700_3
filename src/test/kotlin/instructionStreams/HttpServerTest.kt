@@ -14,7 +14,7 @@ import kotlin.test.assertEquals
 
 class HttpServerTest {
     companion object {
-        private var port = 8000
+        private var port = 8001
     }
 
     private val server = HttpServer(port++)
