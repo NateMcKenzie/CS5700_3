@@ -5,6 +5,7 @@ import ShippingUpdate
 import Subject
 import java.time.Duration
 import java.time.Instant
+import java.time.ZoneId
 
 abstract class Shipment(
     status: Status,
@@ -45,9 +46,11 @@ abstract class Shipment(
     }
 
     protected fun calculateDays(first: Long, second: Long): Long {
-        val firstInstant = Instant.ofEpochMilli(first)
-        val secondInstant = Instant.ofEpochMilli(second)
-        return Duration.between(firstInstant, secondInstant).toDays()
+        val firstInstant = Instant.ofEpochMilli(first).atZone(ZoneId.systemDefault())
+        val secondInstant = Instant.ofEpochMilli(second).atZone(ZoneId.systemDefault())
+        val firstDays = Duration.between(Instant.ofEpochMilli(0), firstInstant).toDays()
+        val secondDays = Duration.between(Instant.ofEpochMilli(0), secondInstant).toDays()
+        return secondDays - firstDays
     }
 
     protected fun markInvalid(reason: String) {

@@ -9,8 +9,10 @@ class OvernightShipment(
 ) : Shipment(status, id, createdDateTimestamp, currentLocation, notes) {
 
     override fun validate() {
-        if (status != Status.Delayed && calculateDays(createdDateTimestamp, expectedDeliveryDateTimestamp) > 0) {
-            markInvalid("Overnight shipment scheduled to arrive in more than 0 days")
+        if (calculateDays(createdDateTimestamp, expectedDeliveryDateTimestamp) < 0) {
+            markInvalid("Delivery date is earlier than shipment date.")
+        } else if (status != Status.Delayed && calculateDays(createdDateTimestamp, expectedDeliveryDateTimestamp) > 1) {
+            markInvalid("Overnight shipment scheduled to arrive later than next-day")
         } else if (status == Status.Invalid) {
             markValid()
         }
